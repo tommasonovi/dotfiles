@@ -76,6 +76,13 @@ fi
 
 # ── Linux ─────────────────────────────────────────────────────
 if [ "$OS" = "Linux" ]; then
+  # If /var/figure exists, move dotfiles there and symlink
+  if [ -d /var/figure ] && [ ! -d /var/figure/dotfiles ]; then
+    mv "$DOTFILES" /var/figure/dotfiles
+    ln -sf /var/figure/dotfiles "$HOME/dotfiles"
+    DOTFILES=/var/figure/dotfiles
+  fi
+
   if [ "$NO_SUDO" = false ]; then
     sudo apt-get update -q
     sudo apt-get install -y zsh tmux bat ripgrep fzf
@@ -91,13 +98,13 @@ if [ "$OS" = "Linux" ]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --no-update-rc --key-bindings --completion
   fi
-fi
 
-# eza
-if ! command -v eza &>/dev/null; then
-  curl -sS --location \
-    https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz \
-    | tar xz -C ~/.local/bin
+  # eza
+  if ! command -v eza &>/dev/null; then
+    curl -sS --location \
+      https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz \
+      | tar xz -C ~/.local/bin
+  fi
 fi
 
 # ── Set zsh as default ────────────────────────────────────────
