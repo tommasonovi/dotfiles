@@ -71,6 +71,13 @@ if [ "$OS" = "Linux" ]; then
   fi
 fi
 
+# eza
+if ! command -v eza &>/dev/null; then
+  curl -sS --location \
+    https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz \
+    | tar xz -C ~/.local/bin
+fi
+
 # ── Set zsh as default ────────────────────────────────────────
 if [ "$SKIP_CHSH" = false ] && [ "$SHELL" != "$(which zsh)" ] && command -v zsh &>/dev/null; then
   chsh -s "$(which zsh)"
