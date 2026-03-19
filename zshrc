@@ -2,6 +2,10 @@
 export PATH="$HOME/.local/bin:$PATH"
 command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"
 
+# ── Devcontainer profile ──────────────────────────────────────
+[ -f /workspaces/project-x/.devcontainer/load-profile.sh ] && \
+  source /workspaces/project-x/.devcontainer/load-profile.sh
+
 # ── Completion ────────────────────────────────────────────────
 [ -f ~/.zsh/git-completion.bash ] && \
   zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
