@@ -52,13 +52,6 @@ command -v walk &>/dev/null && function lk { cd "$(walk --icons "$@")" }
 # ── Local aliases (machine-specific, not in repo) ─────────────
 [ -f ~/.local_aliases ] && source ~/.local_aliases
 
-# ── tmux auto-attach (remote only) ───────────────────────────
-if [[ -o interactive ]] && command -v tmux &>/dev/null && [ -z "$TMUX" ]; then
-  if [ -n "$SSH_CONNECTION" ] || [ -f /.dockerenv ]; then
-    tmux attach -t main 2>/dev/null || tmux new -s main
-  fi
-fi
-
 # ── History search (must be last) ────────────────────────────
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
