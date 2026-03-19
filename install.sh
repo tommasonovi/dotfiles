@@ -29,6 +29,28 @@ ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
 mkdir -p ~/.config/git
 ln -sf "$DOTFILES/gitconfig"      ~/.config/git/config
 
+# ── Git config ────────────────────────────────────────────────
+if [ ! -f ~/.gitconfig ]; then
+  echo "==> Setting up ~/.gitconfig"
+  read -p "Git name: " git_name
+  read -p "Git email: " git_email
+  cat > ~/.gitconfig << EOF
+[user]
+    name = $git_name
+    email = $git_email
+
+[include]
+    path = $DOTFILES/gitconfig
+EOF
+else
+  # Make sure include is present even if gitconfig already exists
+  if ! grep -q "path = $DOTFILES/gitconfig" ~/.gitconfig; then
+    echo "" >> ~/.gitconfig
+    echo "[include]" >> ~/.gitconfig
+    echo "    path = $DOTFILES/gitconfig" >> ~/.gitconfig
+  fi
+fi
+
 # ── zsh plugins ───────────────────────────────────────────────
 mkdir -p ~/.zsh
 if [ ! -d ~/.zsh/zsh-autosuggestions ]; then
