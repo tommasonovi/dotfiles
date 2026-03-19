@@ -1,11 +1,11 @@
-alias of='open -a Finder ./'
+# macOS only
+if [[ "$(uname -s)" = "Darwin" ]]; then
+  alias of='open -a Finder ./'
+fi
+
 alias python='python3'
 alias pip='pip3'
-alias cat='bat -p'
 alias ...='../..'
-alias ls="eza --icons --group-directories-first"
-alias ll="eza --icons --group-directories-first -lah"
-alias ff="find . -type f | fzf"
-alias hist="history | fzf"
+alias ff='find . -type f | fzf'
+alias hist='history | fzf'
 alias ssht='ssh tomd'
-alias pretty_bash='bash --init-file <(echo 'eval "$(starship init bash)"')'
