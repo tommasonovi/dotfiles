@@ -16,5 +16,5 @@ done
 alias helm_cli='unset ROBOT_UID && export TERM=xterm-256color && bazel run //apps/helm_app/helm_cli'
 alias log_server='bazel run //apps/log_server -- --log_dir=/workspaces/project-x/sim_logs --noenable_auto_upload'
 
-# ── Personal setup (no-op if file doesn't exist) ──────────────
+# ── Personal setup ────────────────────────────────────────────
 [ -f /var/figure/.personal_profile.sh ] && source /var/figure/.personal_profile.sh
