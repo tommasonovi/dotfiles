@@ -10,6 +10,5 @@ alias ff='find . -type f | fzf'
 alias hist='history | fzf'
 
 # SSH
-alias ssht='ssh tomd'
 alias td='ssh tomd'
 alias tm='ssh tomm'
