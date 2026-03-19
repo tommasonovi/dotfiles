@@ -34,9 +34,8 @@ function lk {
 }
 
 # Aliases
-if [ -f .zsh_aliases ]; then
-	. ~/.zsh_aliases
-fi
+[ -f ~/.shared_aliases ] && source ~/.shared_aliases
+[ -f ~/.zsh_aliases ]    && source ~/.zsh_aliases
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
