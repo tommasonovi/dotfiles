@@ -18,8 +18,7 @@ autoload -Uz compinit && compinit
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Zoxide setup
-eval "$(zoxide init zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+command -v zoxide &>/dev/null && eval "$(zoxide init --cmd cd zsh)"
 
 # Starship setup
 eval "$(starship init zsh)"
