@@ -3,8 +3,11 @@ export PATH="$HOME/.local/bin:$PATH"
 command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"
 
 # ── Devcontainer profile ──────────────────────────────────────
-[ -f /workspaces/project-x/.devcontainer/load-profile.sh ] && \
+if [ -f /workspaces/project-x/.devcontainer/load-profile.sh ] && [ -z "$PROFILE_LOADED" ]; then
+  export PROFILE_LOADED=1
+  autoload -Uz bashcompinit && bashcompinit
   source /workspaces/project-x/.devcontainer/load-profile.sh
+fi
 
 # ── Completion ────────────────────────────────────────────────
 [ -f ~/.zsh/git-completion.bash ] && \
