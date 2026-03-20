@@ -5,10 +5,12 @@ command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"
 
 # ── Devcontainer profile ──────────────────────────────────────
 # Load devcontainer profile only if not already loaded via personal_profile.sh
-if [ -f /workspaces/project-x/.devcontainer/load-profile.sh ] && [ -z "$PERSONAL_PROFILE_LOADED" ]; then
+_px_root="${PROJECT_X_ROOT:-/workspaces/project-x}"
+if [ -f "$_px_root/.devcontainer/load-profile.sh" ] && [ -z "$PERSONAL_PROFILE_LOADED" ]; then
   autoload -Uz bashcompinit && bashcompinit
-  source /workspaces/project-x/.devcontainer/load-profile.sh
+  source "$_px_root/.devcontainer/load-profile.sh"
 fi
+unset _px_root
 
 # ── Completion ────────────────────────────────────────────────
 [ -f ~/.zsh/git-completion.bash ] && \

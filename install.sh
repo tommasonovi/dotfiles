@@ -31,10 +31,11 @@ ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
 
 # ── Git config ────────────────────────────────────────────────
 if [ ! -f ~/.gitconfig ]; then
-  echo "==> Setting up ~/.gitconfig"
-  read -p "Git name: " git_name
-  read -p "Git email: " git_email
-  cat > ~/.gitconfig << EOF
+  if [ -t 0 ]; then
+    echo "==> Setting up ~/.gitconfig"
+    read -p "Git name: " git_name
+    read -p "Git email: " git_email
+    cat > ~/.gitconfig << EOF
 [user]
     name = $git_name
     email = $git_email
@@ -42,6 +43,9 @@ if [ ! -f ~/.gitconfig ]; then
 [include]
     path = $DOTFILES/gitconfig
 EOF
+  else
+    echo "==> Skipping git config (non-interactive). Run install.sh manually to set up."
+  fi
 else
   # Make sure include is present
   if ! grep -q "path = $DOTFILES/gitconfig" ~/.gitconfig; then
@@ -105,39 +109,15 @@ if [ "$OS" = "Linux" ]; then
       | tar xz -C ~/.local/bin
   fi
 
-  # ── Personal profile for devcontainer ────────────────────────
+  # ── Devcontainer profiles ────────────────────────────────────
   if [ -d /var/figure ]; then
-    cat > /var/figure/.personal_profile.sh << 'PROFILE'
-# Run install only once (not on every shell start)
-if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
-  export PERSONAL_PROFILE_LOADED=1
+    cp "$DOTFILES/personal_profile.sh" /var/figure/.personal_profile.sh
 
-  # Clone dotfiles if not present
-  if [ ! -d /var/figure/dotfiles ]; then
-    git clone --quiet https://github.com/tommasonovi/dotfiles.git /var/figure/dotfiles
-  fi
-
-  # Install tools to /var/figure/bin (persists across rebuilds)
-  mkdir -p /var/figure/bin
-
-  if [ ! -f /var/figure/bin/zoxide ]; then
-    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | \
-      ZOXIDE_INSTALL_DIR=/var/figure/bin sh
-  fi
-
-  if [ ! -f /var/figure/bin/bat ]; then
-    curl -sS --location \
-      https://github.com/sharkdp/bat/releases/latest/download/bat-v0.24.0-x86_64-unknown-linux-musl.tar.gz \
-      | tar xz --strip-components=1 -C /var/figure/bin --wildcards '*/bat'
-  fi
-fi
-
-# Add /var/figure/bin to PATH
-export PATH="/var/figure/bin:$PATH"
-
-# Always switch to zsh if not already in it
-[ "$0" != "zsh" ] && [ -x /usr/bin/zsh ] && PERSONAL_PROFILE_LOADED=1 exec /usr/bin/zsh
-PROFILE
+    # Copy custom.profile.sh to project-x devcontainer (gitignored, personal)
+    local_devcontainer="$HOME/src/project-x/.devcontainer"
+    if [ -d "$local_devcontainer" ]; then
+      cp "$DOTFILES/custom.profile.sh" "$local_devcontainer/custom.profile.sh"
+    fi
   fi
 fi
 
