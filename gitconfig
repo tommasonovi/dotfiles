@@ -29,12 +29,12 @@
     line-numbers = true
     dark = true
     syntax-theme = gruvbox-dark
-    minus-style = "syntax #3c1f1e"
-    minus-emph-style = "syntax #6c2e2e"
-    plus-style = "syntax #1e3c1e"
-    plus-emph-style = "syntax #2e6c2e"
-    line-numbers-minus-style = "bright-red"
-    line-numbers-plus-style = "bright-green"
+    minus-style = "syntax #4d1f1f"
+    minus-emph-style = "syntax #8b2e2e"
+    plus-style = "syntax #1f4d1f"
+    plus-emph-style = "syntax #2e8b2e"
+    line-numbers-minus-style = "#fb4934"
+    line-numbers-plus-style = "#b8bb26"
     hunk-header-decoration-style = "cyan box"
 
 [merge]

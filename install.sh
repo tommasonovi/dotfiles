@@ -21,6 +21,7 @@ ln -sf "$DOTFILES/zsh_aliases"    ~/.zsh_aliases
 ln -sf "$DOTFILES/shared_aliases" ~/.shared_aliases
 ln -sf "$DOTFILES/tmux.conf"      ~/.tmux.conf
 ln -sf "$DOTFILES/vimrc"          ~/.vimrc
+ln -sfn "$DOTFILES/vim"           ~/.vim
 
 mkdir -p ~/.config/bat
 ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml

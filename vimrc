@@ -1,3 +1,6 @@
 syntax on
 set number
-colorscheme default 
+set termguicolors
+set background=dark
+let g:gruvbox_contrast_dark = 'medium'
+colorscheme gruvbox
