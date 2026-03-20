@@ -70,6 +70,13 @@ if [ "$OS" = "Darwin" ]; then
   brew install starship zoxide fzf walk tmux eza git-delta
   brew install --cask font-jetbrains-mono-nerd-font
 
+  # Cursor editor settings
+  cursor_target="$HOME/Library/Application Support/Cursor/User"
+  if [ -d "$cursor_target" ]; then
+    ln -sf "$DOTFILES/cursor/settings.json"    "$cursor_target/settings.json"
+    ln -sf "$DOTFILES/cursor/keybindings.json" "$cursor_target/keybindings.json"
+  fi
+
   if [ "$SKIP_GHOSTTY" = false ]; then
     brew install --cask ghostty
     mkdir -p ~/.config/ghostty

@@ -1,0 +1,77 @@
+{
+  "workbench.fontAliasing": "antialiased",
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 14,
+  "editor.lineHeight": 20,
+  "editor.rulers": [100],
+  "editor.wordWrap": "on",
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.fontWeightBold": "normal",
+  "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
+  "terminal.integrated.scrollback": 1000000,
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.profiles.linux": {
+    "zsh": {
+      "path": "/usr/bin/zsh"
+    }
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  "cmake.showOptionsMovedNotification": false,
+  "cmake.configureOnOpen": true,
+  "redhat.telemetry.enabled": false,
+  "remote.autoForwardPortsSource": "hybrid",
+  "extensions.ignoreRecommendations": true,
+  "editor.accessibilitySupport": "off",
+  "githubPullRequests.pullBranch": "never",
+  "workbench.editor.revealIfOpen": true,
+  "git.openRepositoryInParentFolders": "never",
+  "grunt.autoDetect": "on",
+  "gulp.autoDetect": "on",
+  "workbench.iconTheme": "vscode-icons",
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "C_Cpp.autocomplete": "disabled",
+  "C_Cpp.doxygen.generateOnType": false,
+  "C_Cpp.autoAddFileAssociations": false,
+  "C_Cpp.debugShortcut": false,
+  "editor.formatOnSave": true,
+  "git.autofetch": true,
+  "vsicons.dontShowNewVersionMessage": true,
+  "files.autoSave": "afterDelay",
+  "editor.tokenColorCustomizations": {
+    "[Sublime Material Theme - Dark]": {
+      "textMateRules": [
+        {
+          "scope": ["entity.name.scope-resolution.cpp"],
+          "settings": {
+            "foreground": "#9bf8b1"
+          }
+        },
+        {
+          "scope": [
+            "punctuation.separator.dot-access.cpp",
+            "punctuation.separator.scope-resolution.cpp",
+            "punctuation.separator.delimiter.comma.cpp"
+          ],
+          "settings": {
+            "foreground": "#ff81ec"
+          }
+        },
+        {
+          "scope": [
+            "string.quoted.double.cpp",
+            "punctuation.definition.string.begin.cpp",
+            "punctuation.definition.string.end.cpp"
+          ],
+          "settings": {
+            "foreground": "#fffb7d"
+          }
+        }
+      ]
+    }
+  },
+  "workbench.colorTheme": "Sublime Material Theme - Dark",
+  "remote.SSH.remotePlatform": {
+    "tomd": "linux"
+  }
+}
