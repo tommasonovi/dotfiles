@@ -40,5 +40,5 @@ fi
 # Add /var/figure/bin to PATH
 export PATH="/var/figure/bin:$PATH"
 
-# Always switch to zsh if not already in it
-[ "$0" != "zsh" ] && [ -x /usr/bin/zsh ] && PERSONAL_PROFILE_LOADED=1 exec /usr/bin/zsh
+# Switch to zsh if not already in it
+[ -z "$ZSH_VERSION" ] && [ -x /usr/bin/zsh ] && exec /usr/bin/zsh
