@@ -96,7 +96,7 @@ if [ "$OS" = "Linux" ]; then
   # Skip apt in devcontainer — custom.profile.sh handles it
   if [ "$NO_SUDO" = false ] && [ ! -f /.dockerenv ]; then
     sudo apt-get update -q
-    sudo apt-get install -y zsh tmux bat ripgrep fzf
+    sudo apt-get install -y zsh tmux bat ripgrep fzf xclip
   fi
 
   command -v starship &>/dev/null || \
