@@ -3,8 +3,8 @@ export PATH="$HOME/.local/bin:$PATH"
 command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"
 
 # ── Devcontainer profile ──────────────────────────────────────
-if [ -f /workspaces/project-x/.devcontainer/load-profile.sh ] && [ -z "$PROFILE_LOADED" ]; then
-  export PROFILE_LOADED=1
+# Load devcontainer profile only if not already loaded via personal_profile.sh
+if [ -f /workspaces/project-x/.devcontainer/load-profile.sh ] && [ -z "$PERSONAL_PROFILE_LOADED" ]; then
   autoload -Uz bashcompinit && bashcompinit
   source /workspaces/project-x/.devcontainer/load-profile.sh
 fi
