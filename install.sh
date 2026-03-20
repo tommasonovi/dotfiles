@@ -66,7 +66,7 @@ fi
 
 # ── macOS ─────────────────────────────────────────────────────
 if [ "$OS" = "Darwin" ]; then
-  brew install starship zoxide fzf walk tmux eza
+  brew install starship zoxide fzf walk tmux eza git-delta
   brew install --cask font-jetbrains-mono-nerd-font
 
   if [ "$SKIP_GHOSTTY" = false ]; then
@@ -100,6 +100,13 @@ if [ "$OS" = "Linux" ]; then
   if ! command -v fzf &>/dev/null; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --no-update-rc --key-bindings --completion
+  fi
+
+  # delta
+  if ! command -v delta &>/dev/null; then
+    curl -sSfL \
+      "$(curl -sSf https://api.github.com/repos/dandavison/delta/releases/latest | grep -o 'https://[^"]*x86_64-unknown-linux-musl.tar.gz')" \
+      | tar xz --strip-components=1 -C ~/.local/bin --wildcards '*/delta'
   fi
 
   # eza
