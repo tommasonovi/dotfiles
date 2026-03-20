@@ -64,8 +64,8 @@ command -v walk &>/dev/null && function lk { cd "$(walk --icons "$@")" }
 [ -f ~/.secrets ]             && source ~/.secrets
 
 # ── Git config ────────────────────────────────────────────────
-# Use /var/figure/.gitconfig in devcontainer (where ~ is ephemeral)
-[ -f /var/figure/.gitconfig ] && export GIT_CONFIG_GLOBAL=/var/figure/.gitconfig
+# Use /var/figure/.gitconfig in devcontainer (where ~/.gitconfig doesn't exist)
+[ ! -f ~/.gitconfig ] && [ -f /var/figure/.gitconfig ] && export GIT_CONFIG_GLOBAL=/var/figure/.gitconfig
 
 # ── Local aliases (machine-specific, not in repo) ─────────────
 [ -f ~/.local_aliases ] && source ~/.local_aliases
