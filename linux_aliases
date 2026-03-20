@@ -1,13 +1,9 @@
 alias tomdev='cd ~/src/project-x && connect_devcontainer'
 
 function start_devcontainer() {
-  local name="${1:-}"
+  local name="${1:-gpu}"
   local config
-  if [ -n "$name" ]; then
-    config=$(find .devcontainer -path "*${name}*" -name "devcontainer.json" | head -1)
-  else
-    config=$(find .devcontainer -maxdepth 2 -name "devcontainer.json" | head -1)
-  fi
+  config=$(find .devcontainer -path "*${name}*" -name "devcontainer.json" | head -1)
   if [ -z "$config" ]; then
     echo "No devcontainer.json found${name:+ matching '$name'}."
     echo "Available configs:"
