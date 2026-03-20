@@ -6,18 +6,20 @@ command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"
 # ── Devcontainer profile ──────────────────────────────────────
 # Source project profile directly for aliases/env (not load-profile.sh
 # which re-runs custom.profile.sh apt installs on every shell).
-_px_root="${PROJECT_X_ROOT:-/workspaces/project-x}"
-if [ -f "$_px_root/.devcontainer/profile.sh" ]; then
-  autoload -Uz bashcompinit && bashcompinit
-  source "$_px_root/.devcontainer/profile.sh"
-fi
-unset _px_root
-
 # ── Completion ────────────────────────────────────────────────
 [ -f ~/.zsh/git-completion.bash ] && \
   zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 fpath=(~/.zsh $fpath)
 autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
+
+# ── Devcontainer profile ──────────────────────────────────────
+# Source after compinit/bashcompinit so bash completions register
+_px_root="${PROJECT_X_ROOT:-/workspaces/project-x}"
+if [ -f "$_px_root/.devcontainer/profile.sh" ]; then
+  source "$_px_root/.devcontainer/profile.sh"
+fi
+unset _px_root
 
 # ── History ───────────────────────────────────────────────────
 HISTFILE=~/.zsh_history
