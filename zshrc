@@ -64,8 +64,10 @@ command -v walk &>/dev/null && function lk { cd "$(walk --icons "$@")" }
 [ -f ~/.secrets ]             && source ~/.secrets
 
 # ── Git config ────────────────────────────────────────────────
-# Use /var/figure/.gitconfig in devcontainer (where ~/.gitconfig doesn't exist)
-[ ! -f ~/.gitconfig ] && [ -f /var/figure/.gitconfig ] && export GIT_CONFIG_GLOBAL=/var/figure/.gitconfig
+# Ensure dotfiles gitconfig is included (devcontainer may have its own ~/.gitconfig)
+if [ -f /var/figure/dotfiles/gitconfig ] && ! git config --global --get-all include.path 2>/dev/null | grep -q "/var/figure/dotfiles/gitconfig"; then
+  git config --global --add include.path /var/figure/dotfiles/gitconfig
+fi
 
 # ── Local aliases (machine-specific, not in repo) ─────────────
 [ -f ~/.local_aliases ] && source ~/.local_aliases
