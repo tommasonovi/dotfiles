@@ -29,6 +29,8 @@ dotfiles/
 ├── vimrc                 # vim config
 ├── bat/config            # bat config
 ├── ghostty/config        # ghostty config (macOS only)
+├── cursor/settings.json  # cursor editor settings (macOS only)
+├── cursor/keybindings.json
 ├── personal_profile.sh   # devcontainer bootstrap (tracked)
 ├── custom.profile.sh     # devcontainer custom profile (tracked)
 └── README.md
