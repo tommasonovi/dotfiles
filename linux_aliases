@@ -1,0 +1,21 @@
+alias tomdev='cd ~/src/project-x && connect_devcontainer'
+
+function start_devcontainer() {
+  local config=$(find .devcontainer -name "devcontainer.json" | head -1)
+  if [ -z "$config" ]; then
+    echo "No devcontainer.json found in .devcontainer/"
+    return 1
+  fi
+  echo "Starting devcontainer with config: $config"
+  devcontainer up --config "$config" --workspace-folder .
+}
+
+function connect_devcontainer() {
+  local container=$(docker ps --filter name=dev-gpu --format "{{.Names}}" | head -1)
+  if [ -z "$container" ]; then
+    echo "No dev-gpu devcontainer found. Run start_devcontainer first."
+    return 1
+  fi
+  echo "Connecting to: $container"
+  docker exec -it "$container" bash
+}

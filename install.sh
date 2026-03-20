@@ -29,6 +29,9 @@ ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
 mkdir -p ~/.config/git
 ln -sf "$DOTFILES/gitconfig"      ~/.config/git/config
 
+# Linux only
+[ "$OS" = "Linux" ] && ln -sf "$DOTFILES/linux_aliases" ~/.linux_aliases
+
 # ── Git config ────────────────────────────────────────────────
 if [ ! -f ~/.gitconfig ]; then
   echo "==> Setting up ~/.gitconfig"

@@ -48,6 +48,7 @@ command -v walk &>/dev/null && function lk { cd "$(walk --icons "$@")" }
 # ── Aliases ───────────────────────────────────────────────────
 [ -f ~/.shared_aliases ] && source ~/.shared_aliases
 [ -f ~/.zsh_aliases ]    && source ~/.zsh_aliases
+[ -f ~/.linux_aliases ] && source ~/.linux_aliases
 
 # ── Secrets ───────────────────────────────────────────────────
 [ -f /var/figure/secrets.sh ] && source /var/figure/secrets.sh
