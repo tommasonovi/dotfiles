@@ -218,54 +218,53 @@ disabled = false
 [nodejs]
 symbol = ""
 style = "fg:color_env"
-format = '[( $symbol( $version) )]($style)'
+format = '[( $symbol )]($style)'
 
 [c]
 symbol = ""
 style = "fg:color_env"
-format = '[( $symbol( $version) )]($style)'
+format = '[( $symbol )]($style)'
 
 [rust]
 symbol = "󱘗"
 style = "fg:color_env"
-format = '[( $symbol( $version) )]($style)'
+format = '[( $symbol )]($style)'
 
 [golang]
 symbol = "󰟓"
 style = "fg:color_env"
-format = '[( $symbol( $version) )]($style)'
+format = '[( $symbol )]($style)'
 
 [php]
 symbol = ""
 style = "fg:color_env"
-format = '[( $symbol( $version) )]($style)'
+format = '[( $symbol )]($style)'
 
 [java]
 symbol = ""
 style = "fg:color_env"
-format = '[( $symbol( $version) )]($style)'
+format = '[( $symbol )]($style)'
 
 [kotlin]
 symbol = ""
 style = "fg:color_env"
-format = '[( $symbol( $version) )]($style)'
+format = '[( $symbol )]($style)'
 
 [haskell]
 symbol = ""
 style = "fg:color_env"
-format = '[( $symbol( $version) )]($style)'
+format = '[( $symbol )]($style)'
 
 [python]
 symbol = ""
 style = "fg:color_env"
-format = '[( $symbol( $version)( $virtualenv) )]($style)'
-version_format = '${raw}'
+format = '[( $symbol( $virtualenv) )]($style)'
 
 [package]
 disabled = false
 symbol = "󰏗"
 style = "fg:color_env"
-format = '[( $symbol( $version) )]($style)'
+format = '[( $symbol )]($style)'
 
 [docker_context]
 symbol = ""
