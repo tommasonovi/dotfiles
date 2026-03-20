@@ -1,4 +1,6 @@
 alias tomdev='cd ~/src/project-x && connect_devcontainer'
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
 
 function start_devcontainer() {
   local name="${1:-gpu}"
