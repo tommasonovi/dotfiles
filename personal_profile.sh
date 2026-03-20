@@ -53,9 +53,7 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
   fi
 
   # Run dotfiles install (creates symlinks, zsh plugins, etc.)
-  if [ ! -f ~/.zshrc ] || [ ! -L ~/.zshrc ]; then
-    /var/figure/dotfiles/install.sh --no-sudo --no-chsh --no-ghostty
-  fi
+  /var/figure/dotfiles/install.sh --no-sudo --no-chsh --no-ghostty
 fi
 
 # Add /var/figure/bin to PATH
