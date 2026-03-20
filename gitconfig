@@ -25,7 +25,6 @@
 
 [delta]
     navigate = true
-    side-by-side = true
     line-numbers = true
     dark = true
     syntax-theme = gruvbox-dark
@@ -60,7 +59,7 @@
     cima = commit -am
     co = checkout
     cp = cherry-pick -x
-    d = diff -w
+    d = "!f() { git diff --name-only \"$@\" | fzf --reverse --ansi --color='pointer:red,prompt:red' --header='Changed files' --preview \"git diff --color=always $@ -- {1} | delta\" --preview-window=right:70%; }; f"
     mom = fetch origin && merge origin/main
     nb = checkout -b
     oups = commit --amend --no-edit
