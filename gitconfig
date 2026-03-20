@@ -85,7 +85,7 @@
     nukefile = clean -f
     nukelist = clean -fdxn
     nukefilelist = clean -fn
-    br = branch --sort=-committerdate --format='%(color:red bold)%(refname:short)%(color:reset) %(color:dim)%(committerdate:relative) %(subject)%(color:reset)'
+    br = branch --sort=-committerdate --format='%(if)%(HEAD)%(then)%(color:green bold)* %(refname:short)%(color:reset)%(else)  %(color:red bold)%(refname:short)%(color:reset)%(end) %(color:dim)%(committerdate:relative) %(subject)%(color:reset)'
     sw = "!git branch --sort=-committerdate --color --format='%(color:red bold)%(refname:short)%(color:reset) %(color:dim)%(committerdate:relative) %(subject)%(color:reset)' | fzf --reverse --ansi --color='pointer:red,prompt:red' --header='Switch branch' --preview 'git log --oneline --color -20 {1}' | awk '{print $1}' | xargs git switch"
     brd = "!git branch --sort=-committerdate --color --format='%(color:red bold)%(refname:short)%(color:reset) %(color:dim)%(committerdate:relative) %(subject)%(color:reset)' | fzf --reverse --ansi --multi --color='pointer:red,prompt:red' --header='Delete branches (TAB to multi-select)' --preview 'git log --oneline --color -20 {1}' | awk '{print $1}' | xargs git branch -d"
 [merge "bazel-lockfile-merge"]
