@@ -40,6 +40,8 @@ command -v starship &>/dev/null && eval "$(starship init zsh)"
 # ── fzf ───────────────────────────────────────────────────────
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && \
   source /usr/share/doc/fzf/examples/key-bindings.zsh
+[ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
+[ -f ~/.fzf/shell/completion.zsh ] && source ~/.fzf/shell/completion.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # ── Walk ──────────────────────────────────────────────────────
