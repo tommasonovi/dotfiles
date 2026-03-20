@@ -38,10 +38,13 @@ command -v zoxide &>/dev/null && eval "$(zoxide init --cmd cd zsh)"
 command -v starship &>/dev/null && eval "$(starship init zsh)"
 
 # ── fzf ───────────────────────────────────────────────────────
-[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && \
+[ -d ~/.fzf/bin ] && export PATH="$HOME/.fzf/bin:$PATH"
+if [ -d ~/.fzf/shell ]; then
+  source ~/.fzf/shell/key-bindings.zsh
+  source ~/.fzf/shell/completion.zsh
+elif [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
   source /usr/share/doc/fzf/examples/key-bindings.zsh
-[ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
-[ -f ~/.fzf/shell/completion.zsh ] && source ~/.fzf/shell/completion.zsh
+fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # ── Walk ──────────────────────────────────────────────────────
