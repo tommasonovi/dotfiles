@@ -106,28 +106,23 @@ if [ "$OS" = "Linux" ]; then
   fi
 
   # ── Personal profile for devcontainer ────────────────────────
-  if [ -d /var/figure ]; then
-    cat > /var/figure/.personal_profile.sh << 'PROFILE'
-# Only run once per session
-[ -n "$PERSONAL_PROFILE_LOADED" ] && return
-export PERSONAL_PROFILE_LOADED=1
+ # Run install only once (not on every shell start)
+ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
+   export PERSONAL_PROFILE_LOADED=1
 
-# Clone dotfiles if not present
-if [ ! -d /var/figure/dotfiles ]; then
-  git clone --quiet https://github.com/tommasonovi/dotfiles.git /var/figure/dotfiles
-fi
+   # Clone dotfiles if not present
+   if [ ! -d /var/figure/dotfiles ]; then
+     git clone --quiet https://github.com/tommasonovi/dotfiles.git /var/figure/dotfiles
+   fi
 
-# Run install only if zoxide is missing
-if ! command -v zoxide &>/dev/null; then
-  bash /var/figure/dotfiles/install.sh --no-ghostty --no-chsh
-fi
+   # Run install only if zoxide is missing
+   if ! command -v zoxide &>/dev/null; then
+     bash /var/figure/dotfiles/install.sh --no-ghostty --no-chsh
+   fi
+ fi
 
-# Switch to zsh, carrying PERSONAL_PROFILE_LOADED into new shell
-[ -x /usr/bin/zsh ] && PERSONAL_PROFILE_LOADED=1 exec /usr/bin/zsh
-PROFILE
-  fi
-fi
-
+# Always switch to zsh if not already in it
+[ "$0" != "zsh" ] && [ -x /usr/bin/zsh ] && PERSONAL_PROFILE_LOADED=1 exec /usr/bin/zsh
 # ── Set zsh as default ────────────────────────────────────────
 if [ "$SKIP_CHSH" = false ] && [ "$SHELL" != "$(which zsh)" ] && command -v zsh &>/dev/null; then
   chsh -s "$(which zsh)"
