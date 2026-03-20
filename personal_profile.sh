@@ -20,15 +20,15 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
   fi
 
   if [ ! -f /var/figure/bin/eza ]; then
-    curl -sS --location \
+    curl -sSfL \
       https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz \
-      | tar xz -C /var/figure/bin
+      | tar xz -C /var/figure/bin || echo "Warning: failed to install eza"
   fi
 
   if [ ! -f /var/figure/bin/bat ]; then
-    curl -sS --location \
-      https://github.com/sharkdp/bat/releases/latest/download/bat-v0.24.0-x86_64-unknown-linux-musl.tar.gz \
-      | tar xz --strip-components=1 -C /var/figure/bin --wildcards '*/bat'
+    curl -sSfL \
+      https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-x86_64-unknown-linux-musl.tar.gz \
+      | tar xz --strip-components=1 -C /var/figure/bin --wildcards '*/bat' || echo "Warning: failed to install bat"
   fi
 
   # Run dotfiles install (creates symlinks, zsh plugins, etc.)
