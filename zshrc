@@ -1,6 +1,7 @@
 # ── PATH ──────────────────────────────────────────────────────
 export PATH="$HOME/.local/bin:$PATH"
 command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"
+[ -d /var/figure/bin ] && export PATH="/var/figure/bin:$PATH"
 
 # ── Devcontainer profile ──────────────────────────────────────
 # Load devcontainer profile only if not already loaded via personal_profile.sh

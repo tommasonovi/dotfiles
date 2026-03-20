@@ -117,17 +117,23 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
     git clone --quiet https://github.com/tommasonovi/dotfiles.git /var/figure/dotfiles
   fi
 
-  # Install tools if missing
-  if ! command -v zoxide &>/dev/null; then
-    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+  # Install tools to /var/figure/bin (persists across rebuilds)
+  mkdir -p /var/figure/bin
+
+  if [ ! -f /var/figure/bin/zoxide ]; then
+    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | \
+      ZOXIDE_INSTALL_DIR=/var/figure/bin sh
   fi
 
-  if ! command -v eza &>/dev/null; then
+  if [ ! -f /var/figure/bin/eza ]; then
     curl -sS --location \
       https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz \
-      | tar xz -C ~/.local/bin
+      | tar xz -C /var/figure/bin
   fi
 fi
+
+# Add /var/figure/bin to PATH
+export PATH="/var/figure/bin:$PATH"
 
 # Always switch to zsh if not already in it
 [ "$0" != "zsh" ] && [ -x /usr/bin/zsh ] && PERSONAL_PROFILE_LOADED=1 exec /usr/bin/zsh
