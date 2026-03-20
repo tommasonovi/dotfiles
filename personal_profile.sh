@@ -31,6 +31,10 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
       | tar xz --strip-components=1 -C /var/figure/bin --wildcards '*/bat' || echo "Warning: failed to install bat"
   fi
 
+  if [ ! -f /var/figure/bin/starship ]; then
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir /var/figure/bin 2>&1 | tail -1
+  fi
+
   # Run dotfiles install (creates symlinks, zsh plugins, etc.)
   if [ ! -f ~/.zshrc ] || [ ! -L ~/.zshrc ]; then
     /var/figure/dotfiles/install.sh --no-sudo --no-chsh --no-ghostty

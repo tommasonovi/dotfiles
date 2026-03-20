@@ -4,12 +4,12 @@ command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"
 [ -d /var/figure/bin ] && export PATH="/var/figure/bin:$PATH"
 
 # ── Devcontainer profile ──────────────────────────────────────
-# Always source load-profile.sh for project aliases/env.
-# personal_profile.sh has its own guard and won't re-exec zsh when $0 == zsh.
+# Source project profile directly for aliases/env (not load-profile.sh
+# which re-runs custom.profile.sh apt installs on every shell).
 _px_root="${PROJECT_X_ROOT:-/workspaces/project-x}"
-if [ -f "$_px_root/.devcontainer/load-profile.sh" ]; then
+if [ -f "$_px_root/.devcontainer/profile.sh" ]; then
   autoload -Uz bashcompinit && bashcompinit
-  source "$_px_root/.devcontainer/load-profile.sh"
+  source "$_px_root/.devcontainer/profile.sh"
 fi
 unset _px_root
 
