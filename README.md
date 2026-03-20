@@ -26,8 +26,7 @@ dotfiles/
 ├── starship.toml         # prompt config
 ├── tmux.conf             # tmux config (Ctrl+A, vim-style)
 ├── gitconfig             # git config (aliases, delta, colors)
-├── vimrc                 # vim config (gruvbox)
-├── vim/colors/           # vim colorschemes
+├── vimrc                 # vim config
 ├── bat/config            # bat config
 ├── ghostty/config        # ghostty config (macOS only)
 ├── personal_profile.sh   # devcontainer bootstrap (tracked)
