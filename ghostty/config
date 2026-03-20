@@ -1,1 +1,14 @@
 term = xterm-256color
+
+# ── Font ─────────────────────────────────────────────────────
+font-family = JetBrains Mono
+font-size = 14
+
+# ── Theme ────────────────────────────────────────────────────
+theme = Gruvbox Dark
+
+# ── Window / tabs ────────────────────────────────────────────
+window-padding-x = 4
+window-padding-y = 4
+macos-titlebar-style = tabs
+window-colorspace = display-p3
