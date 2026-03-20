@@ -9,7 +9,7 @@ export GIT_CONFIG_GLOBAL=/var/figure/.gitconfig
 
 # ── Package installs ──────────────────────────────────────────
 for PACKAGE in "bat" "ripgrep"; do
-  dpkg -l | grep -qw "$PACKAGE" || sudo apt install -y "$PACKAGE"
+  dpkg -l | grep -qw "$PACKAGE" || sudo apt install -y "$PACKAGE" 2>/dev/null || true
 done
 
 # ── Personal setup ────────────────────────────────────────────
