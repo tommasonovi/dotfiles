@@ -16,7 +16,7 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
 
   if [ ! -f /var/figure/bin/zoxide ]; then
     curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | \
-      ZOXIDE_INSTALL_DIR=/var/figure/bin sh
+      sh -s -- --bin-dir /var/figure/bin 2>&1 | tail -1
   fi
 
   if [ ! -f /var/figure/bin/eza ]; then
