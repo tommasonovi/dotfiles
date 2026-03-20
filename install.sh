@@ -21,7 +21,9 @@ ln -sf "$DOTFILES/zsh_aliases"    ~/.zsh_aliases
 ln -sf "$DOTFILES/shared_aliases" ~/.shared_aliases
 ln -sf "$DOTFILES/tmux.conf"      ~/.tmux.conf
 ln -sf "$DOTFILES/vimrc"          ~/.vimrc
-[ -d ~/.vim ] && [ ! -L ~/.vim ] && rm -rf ~/.vim
+if [ -d ~/.vim ] && [ ! -L ~/.vim ]; then
+  rm -rf ~/.vim 2>/dev/null || sudo rm -rf ~/.vim 2>/dev/null || true
+fi
 ln -sfn "$DOTFILES/vim"           ~/.vim
 
 mkdir -p ~/.config/bat
