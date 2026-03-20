@@ -125,10 +125,10 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
       ZOXIDE_INSTALL_DIR=/var/figure/bin sh
   fi
 
-  if [ ! -f /var/figure/bin/eza ]; then
+  if [ ! -f /var/figure/bin/bat ]; then
     curl -sS --location \
-      https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz \
-      | tar xz -C /var/figure/bin
+      https://github.com/sharkdp/bat/releases/latest/download/bat-v0.24.0-x86_64-unknown-linux-musl.tar.gz \
+      | tar xz --strip-components=1 -C /var/figure/bin --wildcards '*/bat'
   fi
 fi
 
