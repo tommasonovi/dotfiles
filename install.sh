@@ -81,7 +81,8 @@ if [ "$OS" = "Linux" ]; then
     DOTFILES=/var/figure/dotfiles
   fi
 
-  if [ "$NO_SUDO" = false ]; then
+  # Skip apt in devcontainer — custom.profile.sh handles it
+  if [ "$NO_SUDO" = false ] && [ ! -f /.dockerenv ]; then
     sudo apt-get update -q
     sudo apt-get install -y zsh tmux bat ripgrep fzf
   fi
@@ -121,8 +122,8 @@ if ! command -v zoxide &>/dev/null; then
   bash /var/figure/dotfiles/install.sh --no-ghostty --no-chsh
 fi
 
-# Switch to zsh
-[ -x /usr/bin/zsh ] && exec /usr/bin/zsh
+# Switch to zsh, carrying PERSONAL_PROFILE_LOADED into new shell
+[ -x /usr/bin/zsh ] && PERSONAL_PROFILE_LOADED=1 exec /usr/bin/zsh
 PROFILE
   fi
 fi
