@@ -117,9 +117,15 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
     git clone --quiet https://github.com/tommasonovi/dotfiles.git /var/figure/dotfiles
   fi
 
-  # Run install only if zoxide is missing
+  # Install tools if missing
   if ! command -v zoxide &>/dev/null; then
-    bash /var/figure/dotfiles/install.sh --no-ghostty --no-chsh
+    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+  fi
+
+  if ! command -v eza &>/dev/null; then
+    curl -sS --location \
+      https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz \
+      | tar xz -C ~/.local/bin
   fi
 fi
 
