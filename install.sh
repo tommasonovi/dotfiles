@@ -120,6 +120,9 @@ fi
 if ! command -v zoxide &>/dev/null; then
   bash /var/figure/dotfiles/install.sh --no-ghostty --no-chsh
 fi
+
+# Switch to zsh
+[ -x /usr/bin/zsh ] && exec /usr/bin/zsh
 PROFILE
   fi
 fi
