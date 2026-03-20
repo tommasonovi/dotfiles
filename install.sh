@@ -20,16 +20,13 @@ ln -sf "$DOTFILES/zshrc"          ~/.zshrc
 ln -sf "$DOTFILES/zsh_aliases"    ~/.zsh_aliases
 ln -sf "$DOTFILES/shared_aliases" ~/.shared_aliases
 ln -sf "$DOTFILES/tmux.conf"      ~/.tmux.conf
-ln -sf "$DOTFILES/vimrc" 	  ~/.vimrc
+ln -sf "$DOTFILES/vimrc"          ~/.vimrc
 
 mkdir -p ~/.config/bat
 ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
 ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
 
-mkdir -p ~/.config/git
-ln -sf "$DOTFILES/gitconfig"      ~/.config/git/config
-
-# Linux only
+# Linux only aliases
 [ "$OS" = "Linux" ] && ln -sf "$DOTFILES/linux_aliases" ~/.linux_aliases
 
 # ── Git config ────────────────────────────────────────────────
@@ -46,11 +43,9 @@ if [ ! -f ~/.gitconfig ]; then
     path = $DOTFILES/gitconfig
 EOF
 else
-  # Make sure include is present even if gitconfig already exists
+  # Make sure include is present
   if ! grep -q "path = $DOTFILES/gitconfig" ~/.gitconfig; then
-    echo "" >> ~/.gitconfig
-    echo "[include]" >> ~/.gitconfig
-    echo "    path = $DOTFILES/gitconfig" >> ~/.gitconfig
+    printf "\n[include]\n    path = %s/gitconfig\n" "$DOTFILES" >> ~/.gitconfig
   fi
 fi
 
@@ -67,7 +62,7 @@ fi
 
 # ── macOS ─────────────────────────────────────────────────────
 if [ "$OS" = "Darwin" ]; then
-  brew install starship zoxide fzf walk tmux
+  brew install starship zoxide fzf walk tmux eza
   brew install --cask font-jetbrains-mono-nerd-font
 
   if [ "$SKIP_GHOSTTY" = false ]; then
@@ -107,6 +102,25 @@ if [ "$OS" = "Linux" ]; then
     curl -sS --location \
       https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz \
       | tar xz -C ~/.local/bin
+  fi
+
+  # ── Personal profile for devcontainer ────────────────────────
+  if [ -d /var/figure ]; then
+    cat > /var/figure/.personal_profile.sh << 'PROFILE'
+# Only run once per session
+[ -n "$PERSONAL_PROFILE_LOADED" ] && return
+export PERSONAL_PROFILE_LOADED=1
+
+# Clone dotfiles if not present
+if [ ! -d /var/figure/dotfiles ]; then
+  git clone --quiet https://github.com/tommasonovi/dotfiles.git /var/figure/dotfiles
+fi
+
+# Run install only if zoxide is missing
+if ! command -v zoxide &>/dev/null; then
+  bash /var/figure/dotfiles/install.sh --no-ghostty --no-chsh
+fi
+PROFILE
   fi
 fi
 
