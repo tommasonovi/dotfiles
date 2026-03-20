@@ -42,6 +42,12 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
     ~/.fzf/install --no-update-rc --key-bindings --completion --no-bash --no-fish >/dev/null
   fi
 
+  if [ ! -f /var/figure/bin/walk ]; then
+    curl -sSfL -o /var/figure/bin/walk \
+      "$(curl -sSf https://api.github.com/repos/antonmedv/walk/releases/latest | grep -o 'https://[^"]*linux_amd64')" \
+      && chmod +x /var/figure/bin/walk || echo "Warning: failed to install walk"
+  fi
+
   if [ ! -f /var/figure/bin/starship ]; then
     curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir /var/figure/bin 2>&1 | tail -1
   fi
