@@ -126,8 +126,38 @@ if [ "$OS" = "Linux" ]; then
 
   # ── Claude persistent data ──────────────────────────────────
   if [ -d /var/figure ]; then
+    # Home-level ~/.claude (sessions, credentials, history)
     mkdir -p /var/figure/.claude
+    if [ -d "$HOME/.claude" ] && [ ! -L "$HOME/.claude" ]; then
+      # Merge existing contents then replace with symlink
+      cp -a "$HOME/.claude/." /var/figure/.claude/ 2>/dev/null || true
+      rm -rf "$HOME/.claude"
+    fi
     ln -sfn /var/figure/.claude "$HOME/.claude"
+
+    # Project-level .claude files (CLAUDE.md, settings.local.json, memory)
+    # Works both on host ($HOME/src/project-x) and in devcontainer (/workspaces/project-x)
+    for PROJECT_CLAUDE in "$HOME/src/project-x/.claude" "/workspaces/project-x/.claude"; do
+      if [ -d "$PROJECT_CLAUDE" ]; then
+        # Symlink CLAUDE.md and settings.local.json from dotfiles
+        ln -sf "$DOTFILES/.claude/CLAUDE.md" "$PROJECT_CLAUDE/CLAUDE.md"
+        ln -sf "$DOTFILES/.claude/settings.local.json" "$PROJECT_CLAUDE/settings.local.json"
+      fi
+    done
+
+    # Persistent memory — Claude uses different project keys on host vs devcontainer
+    # Both should point to the same persistent storage
+    PERSISTENT_MEMORY="/var/figure/project-x/.claude/projects/-workspaces-project-x/memory"
+    mkdir -p "$PERSISTENT_MEMORY"
+    for PROJECT_KEY in "-workspaces-project-x" "-home-${USER}-src-project-x"; do
+      PROJECT_MEMORY="$HOME/.claude/projects/${PROJECT_KEY}/memory"
+      mkdir -p "$(dirname "$PROJECT_MEMORY")"
+      if [ -d "$PROJECT_MEMORY" ] && [ ! -L "$PROJECT_MEMORY" ]; then
+        cp -a "$PROJECT_MEMORY/." "$PERSISTENT_MEMORY/" 2>/dev/null || true
+        rm -rf "$PROJECT_MEMORY"
+      fi
+      ln -sfn "$PERSISTENT_MEMORY" "$PROJECT_MEMORY"
+    done
   fi
 
   # ── Devcontainer profiles ────────────────────────────────────

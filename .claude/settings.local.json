@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:gitlab.dev.figure.ai)",
+      "Bash(glab mr:*)",
+      "Bash(glab api:*)",
+      "Bash(python3 -c \":*)",
+      "Bash(python:*)",
+      "Bash(git status:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr list:*)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(''''Source branch:'''', d[''''source_branch'''']\\); print\\(''''Target branch:'''', d[''''target_branch'''']\\)\")",
+      "Bash(git fetch:*)",
+      "Bash(git log:*)",
+      "Bash(git ls-tree:*)",
+      "Read(//tmp/**)",
+      "Bash(git name-rev:*)",
+      "Bash(git diff-tree:*)",
+      "Bash(git reset:*)",
+      "Bash(git checkout:*)",
+      "Bash(ls:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(git rm:*)",
+      "Bash(pip install:*)",
+      "Bash(find /workspaces/project-x/python_modules/bindings/manipulation/data_types -name *.so -o -name *.py)",
+      "Bash(bazel build:*)",
+      "Bash(bazel run:*)",
+      "Bash(fig --help)",
+      "Bash(mkdir -p /var/figure/project-x/.claude/projects/-workspaces-project-x/memory)",
+      "Bash(cp /home/vscode/.claude/projects/-workspaces-project-x/memory/*.md /var/figure/project-x/.claude/projects/-workspaces-project-x/memory/)",
+      "Bash(rm -rf /home/vscode/.claude/projects/-workspaces-project-x/memory)",
+      "Bash(ln -s /var/figure/project-x/.claude/projects/-workspaces-project-x/memory /home/vscode/.claude/projects/-workspaces-project-x/memory)",
+      "Bash(source:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(cp /home/tommaso/src/project-x/.claude/CLAUDE.md /var/figure/dotfiles/.claude/CLAUDE.md)",
+      "Bash(cp /home/tommaso/src/project-x/.claude/settings.local.json /var/figure/dotfiles/.claude/settings.local.json)"
+    ]
+  }
+}
