@@ -135,13 +135,15 @@ if [ "$OS" = "Linux" ]; then
     fi
     ln -sfn /var/figure/.claude "$HOME/.claude"
 
-    # Project-level .claude files (CLAUDE.md, settings.local.json, memory)
-    # Works both on host ($HOME/src/project-x) and in devcontainer (/workspaces/project-x)
+    # Project-level .claude config — symlink all files from dotfiles/.claude/
+    # into the project .claude/ dir (skills/ stays git-tracked, everything else from dotfiles)
     for PROJECT_CLAUDE in "$HOME/src/project-x/.claude" "/workspaces/project-x/.claude"; do
       if [ -d "$PROJECT_CLAUDE" ]; then
-        # Symlink CLAUDE.md and settings.local.json from dotfiles
-        ln -sf "$DOTFILES/.claude/CLAUDE.md" "$PROJECT_CLAUDE/CLAUDE.md"
-        ln -sf "$DOTFILES/.claude/settings.local.json" "$PROJECT_CLAUDE/settings.local.json"
+        for f in "$DOTFILES/.claude/"*; do
+          name="$(basename "$f")"
+          [ "$name" = "skills" ] && continue  # skills is git-tracked in project-x
+          ln -sf "$f" "$PROJECT_CLAUDE/$name"
+        done
       fi
     done
 
