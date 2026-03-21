@@ -124,6 +124,12 @@ if [ "$OS" = "Linux" ]; then
       | tar xz -C ~/.local/bin
   fi
 
+  # ── Claude persistent data ──────────────────────────────────
+  if [ -d /var/figure ]; then
+    mkdir -p /var/figure/.claude
+    ln -sfn /var/figure/.claude "$HOME/.claude"
+  fi
+
   # ── Devcontainer profiles ────────────────────────────────────
   if [ -d /var/figure ]; then
     ln -sf "$DOTFILES/personal_profile.sh" /var/figure/.personal_profile.sh
