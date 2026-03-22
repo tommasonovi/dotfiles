@@ -2,4 +2,3 @@ secrets.sh
 .DS_Store
 .claude/*
 !.claude/CLAUDE.md
-!.claude/settings.local.json
