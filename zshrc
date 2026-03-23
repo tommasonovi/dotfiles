@@ -32,6 +32,12 @@ setopt SHARE_HISTORY
 # ── Plugins ───────────────────────────────────────────────────
 [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \
   source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+# ── Bazel ──────────────────────────────────────────────────────
+if command -v bazel &>/dev/null; then
+  source <(bazel completion 2>/dev/null) || true
+fi
 
 # ── Zoxide ────────────────────────────────────────────────────
 command -v zoxide &>/dev/null && eval "$(zoxide init --cmd cd zsh)"
