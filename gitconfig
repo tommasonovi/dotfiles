@@ -40,6 +40,9 @@
 [merge]
     conflictstyle = diff3
 
+[pager]
+    diff = cat
+
 [diff]
     colorMoved = default
 
@@ -68,7 +71,7 @@
     co = checkout
     cp = cherry-pick -x
     d = "!f() { git diff --name-only \"$@\" | fzf --reverse --ansi --color='pointer:red,prompt:red' --header='Changed files' --preview \"git diff --color=always $@ -- {1} | delta --side-by-side --width=\\$FZF_PREVIEW_COLUMNS\" --preview-window=down:80%; }; f"
-    vdiff = -c core.pager=cat diff
+    delta = diff
     mom = fetch origin && merge origin/main
     nb = checkout -b
     cob = "!f() { git checkout -b user/tommasonovi/$1; }; f"
