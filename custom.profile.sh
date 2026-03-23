@@ -12,6 +12,7 @@ while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
   sleep 1
 done
 
+sudo apt-get update -q
 for PACKAGE in "bat" "ripgrep"; do
   dpkg -l | grep -qw "$PACKAGE" || sudo apt install -y "$PACKAGE" 2>/dev/null || true
 done
