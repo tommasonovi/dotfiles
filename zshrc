@@ -36,7 +36,8 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # ── Bazel ──────────────────────────────────────────────────────
 if command -v bazel &>/dev/null; then
-  source <(bazel completion 2>/dev/null) || true
+  [ -f ~/.zsh/_bazel ] || { mkdir -p ~/.zsh && curl -sfo ~/.zsh/_bazel \
+    https://raw.githubusercontent.com/bazelbuild/bazel/master/scripts/zsh_completion/_bazel; }
 fi
 
 # ── Zoxide ────────────────────────────────────────────────────
