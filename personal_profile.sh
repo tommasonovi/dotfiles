@@ -52,11 +52,14 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
     curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir /var/figure/bin 2>&1 | tail -1
   fi
 
+  # Add /var/figure/bin to PATH before install so it finds existing tools
+  export PATH="/var/figure/bin:$PATH"
+
   # Run dotfiles install (creates symlinks, zsh plugins, etc.)
   /var/figure/dotfiles/install.sh --no-sudo --no-chsh --no-ghostty
 fi
 
-# Add /var/figure/bin to PATH
+# Ensure PATH is set even if PERSONAL_PROFILE_LOADED was already set
 export PATH="/var/figure/bin:$PATH"
 
 # Switch to zsh if not already in it

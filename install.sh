@@ -181,7 +181,7 @@ if [ "$OS" = "Linux" ]; then
     # Symlink custom.profile.sh to project-x devcontainer (gitignored, personal)
     local_devcontainer="$HOME/src/project-x/.devcontainer"
     if [ -d "$local_devcontainer" ]; then
-      ln -sf "$DOTFILES/custom.profile.sh" "$local_devcontainer/custom.profile.sh"
+      cp "$DOTFILES/custom.profile.sh" "$local_devcontainer/custom.profile.sh"
     fi
   fi
 fi
