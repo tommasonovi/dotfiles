@@ -1,5 +1,4 @@
 term = xterm-256color
-command = /usr/bin/zsh
 
 # ── Font ─────────────────────────────────────────────────────
 font-family = JetBrains Mono
