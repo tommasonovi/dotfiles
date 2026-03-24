@@ -27,6 +27,12 @@ mkdir -p ~/.config/bat
 ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
 ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
 
+# ── Bash starship init (for vibe sessions that use bash) ─────
+STARSHIP_INIT='eval "$(/var/figure/bin/starship init bash)"'
+if [ -f /.dockerenv ] && [ -f ~/.bashrc ] && ! grep -q 'starship init bash' ~/.bashrc; then
+  echo "$STARSHIP_INIT" >> ~/.bashrc
+fi
+
 # Linux only aliases
 [ "$OS" = "Linux" ] && ln -sf "$DOTFILES/linux_aliases" ~/.linux_aliases
 
