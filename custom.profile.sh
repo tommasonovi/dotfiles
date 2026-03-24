@@ -8,8 +8,8 @@ export DISPLAY=:1
 export GIT_CONFIG_GLOBAL=/var/figure/.gitconfig
 
 # Wait for apt lock to be released
-while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-  sleep 1
+for lock in /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock /var/cache/apt/archives/lock; do
+  while sudo fuser "$lock" >/dev/null 2>&1; do sleep 1; done
 done
 
 sudo apt-get update -q
