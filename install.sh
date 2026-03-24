@@ -33,6 +33,12 @@ if [ -f /.dockerenv ] && [ -f ~/.bashrc ] && ! grep -q 'starship init bash' ~/.b
   echo "$STARSHIP_INIT" >> ~/.bashrc
 fi
 
+# ── sh starship init (for minimal containers using /bin/sh) ──
+STARSHIP_INIT_SH='eval "$(/var/figure/bin/starship init sh)"'
+if [ -f /.dockerenv ] && ! grep -q 'starship init sh' ~/.profile 2>/dev/null; then
+  echo "$STARSHIP_INIT_SH" >> ~/.profile
+fi
+
 # Linux only aliases
 [ "$OS" = "Linux" ] && ln -sf "$DOTFILES/linux_aliases" ~/.linux_aliases
 
