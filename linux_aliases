@@ -30,5 +30,5 @@ function connect_devcontainer() {
     return 1
   fi
   echo "Connecting to: $container"
-  docker exec -it "$container" bash
+  docker exec -it "$container" bash -l
 }
