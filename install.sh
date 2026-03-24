@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 OS="$(uname -s)"
 SKIP_GHOSTTY=false
 SKIP_CHSH=false
