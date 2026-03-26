@@ -39,6 +39,9 @@
 
 [merge]
     conflictstyle = diff3
+    tool = vimdiff
+[mergetool]
+    keepBackup = false
 
 [pager]
     diff = cat
