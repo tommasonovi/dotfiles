@@ -152,9 +152,15 @@ if [ "$OS" = "Linux" ]; then
     if [ -d "$HOME/.claude" ] && [ ! -L "$HOME/.claude" ]; then
       # Merge existing contents then replace with symlink
       cp -a "$HOME/.claude/." /var/figure/.claude/ 2>/dev/null || true
-      rm -rf "$HOME/.claude"
+      # Skip if it's a mount point (can't remove)
+      if rm -rf "$HOME/.claude" 2>/dev/null; then
+        ln -sfn /var/figure/.claude "$HOME/.claude"
+      else
+        echo "==> Warning: ~/.claude is a mount point, skipping symlink"
+      fi
+    elif [ ! -e "$HOME/.claude" ]; then
+      ln -sfn /var/figure/.claude "$HOME/.claude"
     fi
-    ln -sfn /var/figure/.claude "$HOME/.claude"
 
     # Project-level .claude config — symlink all files from dotfiles/.claude/
     # into the project .claude/ dir (skills/ stays git-tracked, everything else from dotfiles)
