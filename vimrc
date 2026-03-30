@@ -1,29 +1,11 @@
-" ── vim-plug bootstrap ────────────────────────────────────────
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-" ── Plugins ──────────────────────────────────────────────────
-call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox'
-call plug#end()
-
 " ── General ──────────────────────────────────────────
 set nocompatible
 syntax on
 filetype plugin indent on
 set encoding=utf-8
 
-" ── Theme ────────────────────────────────────────────
-set termguicolors
+" ── Theme (use terminal colors) ──────────────────────
 set background=dark
-let g:gruvbox_contrast_dark = 'medium'
-silent! colorscheme gruvbox
-highlight Normal guibg=NONE ctermbg=NONE
-highlight NonText guibg=NONE ctermbg=NONE
 
 " ── Appearance ──────────────────────────────────────
 set number
