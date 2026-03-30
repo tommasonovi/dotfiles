@@ -9,6 +9,7 @@ set background=dark
 
 " ── Appearance ──────────────────────────────────────
 set number
+set relativenumber
 set cursorline
 set signcolumn=no
 set showmatch
