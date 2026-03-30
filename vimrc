@@ -22,10 +22,11 @@ set termguicolors
 set background=dark
 let g:gruvbox_contrast_dark = 'medium'
 silent! colorscheme gruvbox
+highlight Normal guibg=NONE ctermbg=NONE
+highlight NonText guibg=NONE ctermbg=NONE
 
 " ── Appearance ──────────────────────────────────────
 set number
-set relativenumber
 set cursorline
 set signcolumn=yes
 set colorcolumn=100
