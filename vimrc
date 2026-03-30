@@ -11,7 +11,6 @@ set background=dark
 set number
 set cursorline
 set signcolumn=no
-set colorcolumn=100
 set showmatch
 set showcmd
 set noshowmode
