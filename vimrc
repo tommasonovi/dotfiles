@@ -10,7 +10,7 @@ set background=dark
 " ── Appearance ──────────────────────────────────────
 set number
 set cursorline
-set signcolumn=yes
+set signcolumn=no
 set colorcolumn=100
 set showmatch
 set showcmd
