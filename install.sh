@@ -105,6 +105,15 @@ if [ "$OS" = "Linux" ]; then
     DOTFILES=/var/figure/dotfiles
   fi
 
+  # Re-create symlinks with the (possibly updated) DOTFILES path
+  ln -sf "$DOTFILES/zshrc"          ~/.zshrc
+  ln -sf "$DOTFILES/zsh_aliases"    ~/.zsh_aliases
+  ln -sf "$DOTFILES/shared_aliases" ~/.shared_aliases
+  ln -sf "$DOTFILES/tmux.conf"      ~/.tmux.conf
+  ln -sf "$DOTFILES/vimrc"          ~/.vimrc
+  ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
+  ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
+
   # Skip apt in devcontainer — custom.profile.sh handles it
   if [ "$NO_SUDO" = false ] && [ ! -f /.dockerenv ]; then
     sudo apt-get update -q
