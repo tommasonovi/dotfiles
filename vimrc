@@ -58,7 +58,11 @@ set clipboard=unnamedplus
 set updatetime=250
 set timeoutlen=400
 set undofile
-set undodir=~/.vim/undodir
+if has('nvim')
+  set undodir=~/.local/share/nvim/undo
+else
+  set undodir=~/.vim/undodir
+endif
 set noswapfile
 set nobackup
 
@@ -104,6 +108,6 @@ let g:netrw_winsize = 25
 nnoremap <leader>e :Lexplore<CR>
 
 " ── Create undo directory if missing ───────────────
-if !isdirectory(expand("~/.vim/undodir"))
-    call mkdir(expand("~/.vim/undodir"), "p")
+if !isdirectory(expand(&undodir))
+    call mkdir(expand(&undodir), "p")
 endif
