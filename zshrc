@@ -81,6 +81,10 @@ fi
 # ── Local aliases (machine-specific, not in repo) ─────────────
 [ -f ~/.local_aliases ] && source ~/.local_aliases
 
+# ── Home / End (Cmd+Arrow via Ghostty keybinds) ─────────────
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+
 # ── History search (must be last) ────────────────────────────
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
