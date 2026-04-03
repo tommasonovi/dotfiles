@@ -23,6 +23,11 @@ ln -sf "$DOTFILES/tmux.conf"      ~/.tmux.conf
 ln -sf "$DOTFILES/vimrc"          ~/.vimrc
 mkdir -p ~/.vim/undodir
 
+# ── Claude Code settings ──────────────────────────────────────
+mkdir -p ~/.claude
+ln -sf "$DOTFILES/.claude/settings.json"           ~/.claude/settings.json
+ln -sf "$DOTFILES/.claude/statusline-command.sh"   ~/.claude/statusline-command.sh
+
 mkdir -p ~/.config/bat
 ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
 ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
@@ -115,6 +120,9 @@ if [ "$OS" = "Linux" ]; then
   ln -sf "$DOTFILES/vimrc"          ~/.config/nvim/init.vim
   ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
   ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
+  mkdir -p ~/.claude
+  ln -sf "$DOTFILES/.claude/settings.json"           ~/.claude/settings.json
+  ln -sf "$DOTFILES/.claude/statusline-command.sh"   ~/.claude/statusline-command.sh
 
   # Skip apt in devcontainer — custom.profile.sh handles it
   if [ "$NO_SUDO" = false ] && [ ! -f /.dockerenv ]; then
