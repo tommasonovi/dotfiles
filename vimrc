@@ -24,6 +24,7 @@ if has('termguicolors')
   set termguicolors
 endif
 let g:gruvbox_material_background = 'medium'
+let g:gruvbox_material_foreground = 'original'
 let g:gruvbox_material_transparent_background = 1
 silent! colorscheme gruvbox-material
 
