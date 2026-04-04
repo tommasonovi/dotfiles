@@ -9,11 +9,12 @@ Personal terminal setup for macOS, Ubuntu, and devcontainers.
 - **Terminal**: Ghostty (macOS)
 - **Multiplexer**: tmux (Ctrl+A prefix, vim navigation)
 - **Navigation**: zoxide (`cd` → smart jump)
-- **Fuzzy search**: fzf (Ctrl+R history, Ctrl+T files)
+- **Fuzzy search**: fzf (Ctrl+R history, Ctrl+T files, uses rg to respect .gitignore)
 - **File browser**: walk (`lk`)
 - **ls**: eza
 - **cat/pager**: bat (gruvbox-dark theme)
 - **Git diff**: [delta](https://github.com/dandavison/delta) (side-by-side, syntax highlighting, gruvbox theme)
+- **Editor**: vim with [vim-plug](https://github.com/junegunn/vim-plug), [gitgutter](https://github.com/airblade/vim-gitgutter), [fugitive](https://github.com/tpope/vim-fugitive), [fzf.vim](https://github.com/junegunn/fzf.vim)
 
 ## Structure
 ```
@@ -25,9 +26,10 @@ dotfiles/
 ├── linux_aliases         # linux-specific aliases and functions
 ├── starship.toml         # prompt config
 ├── tmux.conf             # tmux config (Ctrl+A, vim-style)
-├── gitconfig             # git config (aliases, delta, colors)
-├── vimrc                 # vim config
+├── gitconfig             # git config (aliases, delta)
+├── vimrc                 # vim config (vim-plug, gitgutter, fugitive, fzf.vim)
 ├── bat/config            # bat config
+├── .claude/              # Claude Code settings and statusline
 ├── ghostty/config        # ghostty config (macOS only)
 ├── cursor/settings.json  # cursor editor settings (macOS only)
 ├── cursor/keybindings.json
@@ -70,6 +72,7 @@ No manual setup needed. The devcontainer loads automatically via `custom.profile
 |---|---|
 | `git st` | `status -sb` |
 | `git d` | fzf file picker with delta diff preview |
+| `git delta` | pretty diff with delta pager (side-by-side) |
 | `git sw` | fzf branch picker → switch |
 | `git br` | list branches (sorted by recent) |
 | `git brd` | fzf branch picker → delete (Tab for multi-select) |
@@ -85,6 +88,54 @@ No manual setup needed. The devcontainer loads automatically via `custom.profile
 | `git uncommit` | reset --soft HEAD^ |
 | `git pushfl` | push --force-with-lease |
 | `git yeet` | push and set upstream |
+| `git cob <name>` | create `user/tommasonovi/<name>` branch |
+
+`git diff` outputs plain text (easy to copy-paste into Slack). `git delta` uses the delta pager for a pretty side-by-side view.
+
+## Vim
+
+Plugins auto-install on first launch via vim-plug. Leader key is **Space**.
+
+### Fuzzy finder (fzf.vim)
+
+| Key | Action |
+|---|---|
+| `Space ff` | Find files (respects .gitignore) |
+| `Space fg` | Live grep (ripgrep) |
+| `Space fb` | Switch buffers |
+| `Space fh` | Recently opened files |
+| `Space fl` | Search lines in current buffer |
+
+### Git hunks (gitgutter)
+
+Signs (`+`/`-`/`~`) appear in the gutter for changed lines.
+
+| Key | Action |
+|---|---|
+| `]h` / `[h` | Jump to next / previous hunk |
+| `Space hp` | Preview hunk diff |
+| `Space hs` | Stage hunk |
+| `Space hu` | Undo hunk (revert to HEAD) |
+
+### Git workflow (fugitive)
+
+| Key | Action |
+|---|---|
+| `Space gs` | Git status (`s` to stage, `u` to unstage, `=` to inline diff) |
+| `Space gd` | Side-by-side diff (use `:diffget`/`:diffput` to move chunks) |
+| `Space gb` | Git blame |
+| `Space gl` | Git log (last 30 commits) |
+
+### General
+
+| Key | Action |
+|---|---|
+| `Space w` | Save |
+| `Space q` | Quit |
+| `Space e` | Toggle file explorer (netrw) |
+| `Space bn/bp/bd` | Next / previous / delete buffer |
+| `Ctrl+h/j/k/l` | Navigate splits |
+| `Ctrl+d/u` | Scroll down/up (centered) |
 
 ## tmux
 
