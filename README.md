@@ -14,7 +14,7 @@ Personal terminal setup for macOS, Ubuntu, and devcontainers.
 - **ls**: eza
 - **cat/pager**: bat (gruvbox-dark theme)
 - **Git diff**: [delta](https://github.com/dandavison/delta) (side-by-side, syntax highlighting, gruvbox theme)
-- **Editor**: vim with [vim-plug](https://github.com/junegunn/vim-plug), [gitgutter](https://github.com/airblade/vim-gitgutter), [fugitive](https://github.com/tpope/vim-fugitive), [fzf.vim](https://github.com/junegunn/fzf.vim)
+- **Editor**: vim with [vim-plug](https://github.com/junegunn/vim-plug) and [fzf.vim](https://github.com/junegunn/fzf.vim)
 
 ## Structure
 ```
@@ -27,7 +27,7 @@ dotfiles/
 ├── starship.toml         # prompt config
 ├── tmux.conf             # tmux config (Ctrl+A, vim-style)
 ├── gitconfig             # git config (aliases, delta)
-├── vimrc                 # vim config (vim-plug, gitgutter, fugitive, fzf.vim)
+├── vimrc                 # vim config (vim-plug, fzf.vim)
 ├── bat/config            # bat config
 ├── .claude/              # Claude Code settings and statusline
 ├── ghostty/config        # ghostty config (macOS only)
@@ -105,26 +105,6 @@ Plugins auto-install on first launch via vim-plug. Leader key is **Space**.
 | `Space fb` | Switch buffers |
 | `Space fh` | Recently opened files |
 | `Space fl` | Search lines in current buffer |
-
-### Git hunks (gitgutter)
-
-Signs (`+`/`-`/`~`) appear in the gutter for changed lines.
-
-| Key | Action |
-|---|---|
-| `]h` / `[h` | Jump to next / previous hunk |
-| `Space hp` | Preview hunk diff |
-| `Space hs` | Stage hunk |
-| `Space hu` | Undo hunk (revert to HEAD) |
-
-### Git workflow (fugitive)
-
-| Key | Action |
-|---|---|
-| `Space gs` | Git status (`s` to stage, `u` to unstage, `=` to inline diff) |
-| `Space gd` | Side-by-side diff (use `:diffget`/`:diffput` to move chunks) |
-| `Space gb` | Git blame |
-| `Space gl` | Git log (last 30 commits) |
 
 ### General
 

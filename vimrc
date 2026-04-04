@@ -7,8 +7,6 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -26,7 +24,7 @@ set background=dark
 set number
 set relativenumber
 set cursorline
-set signcolumn=yes
+set signcolumn=no
 set showmatch
 set showcmd
 set noshowmode
@@ -129,20 +127,6 @@ nnoremap <leader>fg :Rg<CR>
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>fh :History<CR>
 nnoremap <leader>fl :BLines<CR>
-
-" ── gitgutter ─────────────────────────────────────
-" Signs are shown automatically. Navigation + actions:
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
-nmap <leader>hs <Plug>(GitGutterStageHunk)
-nmap <leader>hu <Plug>(GitGutterUndoHunk)
-nmap <leader>hp <Plug>(GitGutterPreviewHunk)
-
-" ── fugitive ──────────────────────────────────────
-nnoremap <leader>gs :Git<CR>
-nnoremap <leader>gd :Gdiffsplit<CR>
-nnoremap <leader>gb :Git blame<CR>
-nnoremap <leader>gl :Git log --oneline -30<CR>
 
 " ── Create undo directory if missing ───────────────
 if !isdirectory(expand(&undodir))
