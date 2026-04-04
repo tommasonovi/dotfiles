@@ -8,6 +8,7 @@ endif
 
 call plug#begin()
 Plug 'morhetz/gruvbox'
+Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -33,7 +34,7 @@ hi Normal guibg=NONE ctermbg=NONE
 set number
 set relativenumber
 set cursorline
-set signcolumn=no
+set signcolumn=yes
 set showmatch
 set showcmd
 set noshowmode
@@ -129,6 +130,9 @@ let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 25
 nnoremap <leader>e :Lexplore<CR>
+
+" ── gitgutter (signs only, no keymaps) ─────────────
+let g:gitgutter_map_keys = 0
 
 " ── fzf.vim ────────────────────────────────────────
 nnoremap <leader>ff :Files<CR>
