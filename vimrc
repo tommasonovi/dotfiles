@@ -7,7 +7,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'sainnhe/gruvbox-material'
+Plug 'morhetz/gruvbox'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -23,10 +23,11 @@ set background=dark
 if has('termguicolors')
   set termguicolors
 endif
-let g:gruvbox_material_background = 'medium'
-let g:gruvbox_material_foreground = 'original'
-let g:gruvbox_material_transparent_background = 1
-silent! colorscheme gruvbox-material
+let g:gruvbox_transparent_bg = 1
+let g:gruvbox_contrast_dark = 'medium'
+let g:gruvbox_bold = 1
+silent! colorscheme gruvbox
+hi Normal guibg=NONE ctermbg=NONE
 
 " ── Appearance ──────────────────────────────────────
 set number
