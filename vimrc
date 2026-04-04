@@ -7,7 +7,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+Plug 'sainnhe/gruvbox-material'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -23,8 +23,8 @@ set background=dark
 if has('termguicolors')
   set termguicolors
 endif
-let g:material_theme_style = 'default'
-silent! colorscheme material
+let g:gruvbox_material_background = 'medium'
+silent! colorscheme gruvbox-material
 
 " ── Appearance ──────────────────────────────────────
 set number
