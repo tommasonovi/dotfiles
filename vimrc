@@ -7,6 +7,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin()
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -17,8 +18,13 @@ syntax on
 filetype plugin indent on
 set encoding=utf-8
 
-" ── Theme (use terminal colors) ──────────────────────
+" ── Theme ──────────────────────────────────────────
 set background=dark
+if has('termguicolors')
+  set termguicolors
+endif
+let g:material_theme_style = 'default'
+silent! colorscheme material
 
 " ── Appearance ──────────────────────────────────────
 set number
