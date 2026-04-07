@@ -91,6 +91,25 @@ endif
 set noswapfile
 set nobackup
 
+" ── OSC 52 clipboard (works in containers/SSH) ────
+" Sends yanked text to the terminal's clipboard via OSC 52 escape sequence
+function! OSC52Yank() abort
+  let text = getreg('"')
+  let encoded = system('printf ' . shellescape(text) . ' | base64 | tr -d "\n"')
+  call chansend(v:stderr, "\x1b]52;c;" . encoded . "\x07")
+endfunction
+
+if !has('nvim')
+  function! OSC52Yank() abort
+    let text = getreg('"')
+    let encoded = system('printf ' . shellescape(text) . ' | base64 | tr -d "\n"')
+    let osc = "\x1b]52;c;" . encoded . "\x07"
+    call writefile([osc], '/dev/stderr', 'b')
+  endfunction
+endif
+
+autocmd TextYankPost * if v:event.operator ==# 'y' | call OSC52Yank() | endif
+
 " ── Keymaps ────────────────────────────────────────
 let mapleader = " "
 

@@ -13,7 +13,7 @@ for lock in /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock /var/cache/apt/a
 done
 
 sudo apt-get update -q
-for PACKAGE in "bat" "ripgrep"; do
+for PACKAGE in "bat" "ripgrep" "vim-gtk3"; do
   dpkg -l | grep -qw "$PACKAGE" || sudo apt install -y "$PACKAGE" 2>/dev/null || true
 done
 
