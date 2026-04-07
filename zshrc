@@ -6,6 +6,12 @@ command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"
 # ── Devcontainer profile ──────────────────────────────────────
 # Source project profile directly for aliases/env (not load-profile.sh
 # which re-runs custom.profile.sh apt installs on every shell).
+# ── Bazel completion (must be before compinit) ────────────────
+if command -v bazel &>/dev/null; then
+  [ -f ~/.zsh/_bazel ] || { mkdir -p ~/.zsh && curl -sfo ~/.zsh/_bazel \
+    https://raw.githubusercontent.com/bazelbuild/bazel/master/scripts/zsh_completion/_bazel; }
+fi
+
 # ── Completion ────────────────────────────────────────────────
 [ -f ~/.zsh/git-completion.bash ] && \
   zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
@@ -33,12 +39,6 @@ setopt SHARE_HISTORY
 [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \
   source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-
-# ── Bazel ──────────────────────────────────────────────────────
-if command -v bazel &>/dev/null; then
-  [ -f ~/.zsh/_bazel ] || { mkdir -p ~/.zsh && curl -sfo ~/.zsh/_bazel \
-    https://raw.githubusercontent.com/bazelbuild/bazel/master/scripts/zsh_completion/_bazel; }
-fi
 
 # ── Zoxide ────────────────────────────────────────────────────
 command -v zoxide &>/dev/null && eval "$(zoxide init --cmd cd zsh)"
