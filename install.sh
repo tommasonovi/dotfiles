@@ -25,8 +25,18 @@ mkdir -p ~/.vim/undodir
 
 # ── Claude Code settings ──────────────────────────────────────
 mkdir -p ~/.claude
-ln -sf "$DOTFILES/.claude/settings.json"           ~/.claude/settings.json
 ln -sf "$DOTFILES/.claude/statusline-command.sh"   ~/.claude/statusline-command.sh
+# settings.json needs the absolute path to statusline-command.sh, which
+# differs between macOS ($HOME/dotfiles) and devcontainer (/var/figure/dotfiles)
+cat > ~/.claude/settings.json << SETTINGS
+{
+  "model": "opus[1m]",
+  "statusLine": {
+    "type": "command",
+    "command": "bash $DOTFILES/.claude/statusline-command.sh"
+  }
+}
+SETTINGS
 
 mkdir -p ~/.config/bat
 ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
@@ -121,7 +131,6 @@ if [ "$OS" = "Linux" ]; then
   ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
   ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
   mkdir -p ~/.claude
-  ln -sf "$DOTFILES/.claude/settings.json"           ~/.claude/settings.json
   ln -sf "$DOTFILES/.claude/statusline-command.sh"   ~/.claude/statusline-command.sh
 
   # Skip apt in devcontainer — custom.profile.sh handles it
