@@ -30,7 +30,7 @@
     keepBackup = false
 
 [pager]
-    diff = cat
+    diff = delta
 
 [diff]
     colorMoved = default
@@ -59,7 +59,7 @@
     cima = commit -am
     co = checkout
     cp = checkout -p
-    d = "!f() { git diff --name-only \"$@\" | fzf --reverse --ansi --color='pointer:red,prompt:red' --header='Changed files' --preview \"git diff --color=always $@ -- {1} | delta --side-by-side --width=\\$FZF_PREVIEW_COLUMNS\" --preview-window=down:80%; }; f"
+    d = "!f() { git diff --name-only \"$@\" | fzf --reverse --ansi --color='pointer:red,prompt:red' --header='Changed files' --bind 'ctrl-f:preview-page-down,ctrl-b:preview-page-up' --preview \"GIT_PAGER=cat git diff --color=always $@ -- {1} | delta --side-by-side --width=\\$FZF_PREVIEW_COLUMNS\" --preview-window=down:80% ; }; f"
     delta = -c pager.diff=delta diff
     ap = add -p
     rp = restore -p
