@@ -12,5 +12,5 @@ macos-titlebar-style = tabs
 window-colorspace = display-p3
 
 # ── Cmd+Arrow → beginning/end of line (works inside tmux) ───
-keybind = super+left=text:\x1b[H
-keybind = super+right=text:\x1b[F
+keybind = super+left=text:\x1bOH
+keybind = super+right=text:\x1bOF
