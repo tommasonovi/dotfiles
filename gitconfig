@@ -30,7 +30,7 @@
     keepBackup = false
 
 [pager]
-    diff = delta
+    diff = less
 
 [diff]
     colorMoved = default
