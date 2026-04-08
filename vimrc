@@ -11,6 +11,10 @@ Plug 'morhetz/gruvbox'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 call plug#end()
 
 " ── General ──────────────────────────────────────────
@@ -161,6 +165,48 @@ nnoremap <leader>fg :Rg<CR>
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>fh :History<CR>
 nnoremap <leader>fl :BLines<CR>
+
+" ── LSP ────────────────────────────────────────────
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gr <plug>(lsp-references)
+  nmap <buffer> gi <plug>(lsp-implementation)
+  nmap <buffer> K <plug>(lsp-hover)
+  nmap <buffer> <leader>rn <plug>(lsp-rename)
+  nmap <buffer> <leader>ca <plug>(lsp-code-action)
+  nmap <buffer> [d <plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]d <plug>(lsp-next-diagnostic)
+  nmap <buffer> <leader>f <plug>(lsp-document-format)
+endfunction
+
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_virtual_text_enabled = 1
+let g:lsp_diagnostics_signs_enabled = 1
+
+" Format on save for Python and C/C++
+augroup lsp_format
+  au!
+  autocmd BufWritePre *.py,*.c,*.cc,*.cpp,*.h,*.hpp call execute('LspDocumentFormatSync')
+augroup END
+
+" Use ruff for Python formatting/linting, pyright for type checking
+let g:lsp_settings = {
+\   'ruff': {'workspace_config': {}},
+\   'pyright-langserver': {'workspace_config': {'python': {'analysis': {'typeCheckingMode': 'basic'}}}},
+\   'clangd': {'cmd': ['clangd', '--background-index', '--clang-tidy']},
+\ }
+
+" asyncomplete: tab/shift-tab to navigate, enter to confirm
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR>    pumvisible() ? asyncomplete#close_popup() : "\<CR>"
 
 " ── Create undo directory if missing ───────────────
 if !isdirectory(expand(&undodir))
