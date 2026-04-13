@@ -1,5 +1,7 @@
 # ── Terminal ──────────────────────────────────────────────────
 export COLORTERM=truecolor
+export EDITOR=nvim
+export VISUAL=nvim
 
 # ── PATH ──────────────────────────────────────────────────────
 export PATH="$HOME/.local/bin:$PATH"
