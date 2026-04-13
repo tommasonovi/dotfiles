@@ -157,6 +157,12 @@ if [ "$OS" = "Linux" ]; then
       | tar xz --strip-components=1 -C ~/.local/bin --wildcards '*/delta'
   fi
 
+  # neovim (need >= 0.9 for lazy.nvim + modern Lua API)
+  if ! command -v nvim &>/dev/null || [ "$(nvim --version | head -1 | grep -oP '\d+\.\d+' | head -1 | tr -d '.')" -lt 09 ] 2>/dev/null; then
+    curl -sSfL https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz \
+      | tar xz --strip-components=1 -C ~/.local
+  fi
+
   # eza
   if ! command -v eza &>/dev/null; then
     curl -sS --location \
