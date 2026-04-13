@@ -167,7 +167,7 @@ Prefix is **Ctrl+A**.
 
 | Alias | Action |
 |---|---|
-| `ff` | Fuzzy find a file and open in vim |
+| `ff` | Fuzzy find a file and open in nvim |
 | `hist` | Fuzzy search shell history |
 | `ls` / `ll` / `la` | eza with icons |
 | `lk` | walk file browser |
