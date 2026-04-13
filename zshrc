@@ -1,3 +1,6 @@
+# ── Terminal ──────────────────────────────────────────────────
+export COLORTERM=truecolor
+
 # ── PATH ──────────────────────────────────────────────────────
 export PATH="$HOME/.local/bin:$PATH"
 command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"

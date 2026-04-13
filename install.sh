@@ -126,7 +126,7 @@ if [ "$OS" = "Linux" ]; then
   ln -sf "$DOTFILES/shared_aliases" ~/.shared_aliases
   ln -sf "$DOTFILES/tmux.conf"      ~/.tmux.conf
   ln -sf "$DOTFILES/vimrc"          ~/.vimrc
-  rm -f ~/.config/nvim/init.vim 2>/dev/null
+  rm -rf ~/.config/nvim
   ln -sfn "$DOTFILES/nvim"          ~/.config/nvim
   ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
   ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
