@@ -38,6 +38,9 @@ cat > ~/.claude/settings.json << SETTINGS
 }
 SETTINGS
 
+rm -rf ~/.config/nvim
+ln -sfn "$DOTFILES/nvim"          ~/.config/nvim
+
 mkdir -p ~/.config/bat
 ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
 ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
@@ -94,7 +97,7 @@ fi
 
 # ── macOS ─────────────────────────────────────────────────────
 if [ "$OS" = "Darwin" ]; then
-  brew install starship zoxide fzf walk tmux eza git-delta
+  brew install starship zoxide fzf walk tmux eza git-delta neovim
   brew install --cask font-jetbrains-mono-nerd-font
 
   # Cursor editor settings
@@ -126,8 +129,6 @@ if [ "$OS" = "Linux" ]; then
   ln -sf "$DOTFILES/shared_aliases" ~/.shared_aliases
   ln -sf "$DOTFILES/tmux.conf"      ~/.tmux.conf
   ln -sf "$DOTFILES/vimrc"          ~/.vimrc
-  rm -rf ~/.config/nvim
-  ln -sfn "$DOTFILES/nvim"          ~/.config/nvim
   ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
   ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
   mkdir -p ~/.claude
