@@ -53,7 +53,7 @@ if [ -z "$PERSONAL_PROFILE_LOADED" ]; then
   fi
 
   if [ ! -f /var/figure/bin/nvim ]; then
-    curl -sSfL https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz \
+    curl -sSfL https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz \
       | tar xz --strip-components=1 -C /var/figure || echo "Warning: failed to install nvim"
   fi
 
