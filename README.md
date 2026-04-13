@@ -14,7 +14,7 @@ Personal terminal setup for macOS, Ubuntu, and devcontainers.
 - **ls**: eza
 - **cat/pager**: bat (gruvbox-dark theme)
 - **Git diff**: [delta](https://github.com/dandavison/delta) (side-by-side, syntax highlighting, gruvbox theme)
-- **Editor**: vim with [vim-plug](https://github.com/junegunn/vim-plug) and [fzf.vim](https://github.com/junegunn/fzf.vim)
+- **Editor**: neovim (primary) and vim (fallback), both with fzf, LSP, Copilot, and snippets
 
 ## Structure
 ```
@@ -27,7 +27,11 @@ dotfiles/
 ├── starship.toml         # prompt config
 ├── tmux.conf             # tmux config (Ctrl+A, vim-style)
 ├── gitconfig             # git config (aliases, delta)
-├── vimrc                 # vim config (vim-plug, fzf.vim)
+├── vimrc                 # vim config (vim-plug, fzf.vim, LSP, Copilot, snippets)
+├── nvim/                 # neovim config (lazy.nvim, nvim-cmp, Copilot, Mason, noice)
+│   ├── init.lua
+│   ├── lua/config/       # options, keymaps, lazy.nvim bootstrap
+│   └── lua/plugins/      # plugin specs (lsp, cmp, copilot, fzf, noice, etc.)
 ├── bat/config            # bat config
 ├── .claude/              # Claude Code settings and statusline
 ├── ghostty/config        # ghostty config (macOS only)
@@ -92,11 +96,28 @@ No manual setup needed. The devcontainer loads automatically via `custom.profile
 
 `git diff` outputs plain text (easy to copy-paste into Slack). `git delta` uses the delta pager for a pretty side-by-side view.
 
-## Vim
+## Neovim (primary editor)
 
-Plugins auto-install on first launch via vim-plug. Leader key is **Space**.
+Plugins auto-install on first launch via [lazy.nvim](https://github.com/folke/lazy.nvim). Leader key is **Space**.
 
-### Fuzzy finder (fzf.vim)
+First-time setup:
+- `:Copilot auth` to sign in to GitHub Copilot
+- Mason auto-installs LSP servers (pyright, ruff, clangd)
+
+### Plugins
+
+| Plugin | What it does |
+|---|---|
+| [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | Completion engine (LSP + snippets + Copilot in one popup) |
+| [LuaSnip](https://github.com/L3MON4D3/LuaSnip) + [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | Snippet engine + snippet collection |
+| [copilot.lua](https://github.com/zbirenbaum/copilot.lua) + [copilot-cmp](https://github.com/zbirenbaum/copilot-cmp) | AI completions in the cmp popup |
+| [Mason](https://github.com/williamboman/mason.nvim) | LSP server installer |
+| [fzf.vim](https://github.com/junegunn/fzf.vim) | Fuzzy finder |
+| [noice.nvim](https://github.com/folke/noice.nvim) | Floating command line and notifications |
+| gruvbox | Color scheme (transparent background) |
+| vim-gitgutter | Git diff signs in the gutter |
+
+### Keybinds
 
 | Key | Action |
 |---|---|
@@ -105,17 +126,26 @@ Plugins auto-install on first launch via vim-plug. Leader key is **Space**.
 | `Space fb` | Switch buffers |
 | `Space fh` | Recently opened files |
 | `Space fl` | Search lines in current buffer |
-
-### General
-
-| Key | Action |
-|---|---|
+| `gd` | Go to definition |
+| `gr` | Find references |
+| `gi` | Go to implementation |
+| `K` | Hover docs |
+| `Space rn` | Rename symbol |
+| `Space ca` | Code action |
+| `Space f` | Format file |
+| `[d` / `]d` | Previous / next diagnostic |
 | `Space w` | Save |
 | `Space q` | Quit |
 | `Space e` | Toggle file explorer (netrw) |
 | `Space bn/bp/bd` | Next / previous / delete buffer |
 | `Ctrl+h/j/k/l` | Navigate splits |
 | `Ctrl+d/u` | Scroll down/up (centered) |
+| `Tab` / `S-Tab` | Cycle completion / jump snippet placeholders |
+| `Enter` | Confirm completion |
+
+## Vim (fallback)
+
+Same keybinds as neovim. Uses vim-plug (auto-installs on first launch), asyncomplete, vim-lsp, copilot.vim, vim-vsnip.
 
 ## tmux
 
@@ -132,6 +162,16 @@ Prefix is **Ctrl+A**.
 | `Ctrl+A Enter` | Copy mode (vi keys) |
 | `Ctrl+A r` | Reload config |
 | `Ctrl+A d` | Detach |
+
+## Shell aliases
+
+| Alias | Action |
+|---|---|
+| `ff` | Fuzzy find a file and open in vim |
+| `hist` | Fuzzy search shell history |
+| `ls` / `ll` / `la` | eza with icons |
+| `lk` | walk file browser |
+| `cd` | zoxide smart jump |
 
 ## Updating
 ```bash
