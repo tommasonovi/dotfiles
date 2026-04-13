@@ -23,39 +23,12 @@ ln -sf "$DOTFILES/tmux.conf"      ~/.tmux.conf
 ln -sf "$DOTFILES/vimrc"          ~/.vimrc
 mkdir -p ~/.vim/undodir
 
-# ── Claude Code settings ──────────────────────────────────────
-mkdir -p ~/.claude
-ln -sf "$DOTFILES/.claude/statusline-command.sh"   ~/.claude/statusline-command.sh
-# settings.json needs the absolute path to statusline-command.sh, which
-# differs between macOS ($HOME/dotfiles) and devcontainer (/var/figure/dotfiles)
-cat > ~/.claude/settings.json << SETTINGS
-{
-  "model": "opus[1m]",
-  "statusLine": {
-    "type": "command",
-    "command": "bash $DOTFILES/.claude/statusline-command.sh"
-  }
-}
-SETTINGS
-
 rm -rf ~/.config/nvim
 ln -sfn "$DOTFILES/nvim"          ~/.config/nvim
 
 mkdir -p ~/.config/bat
 ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
 ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
-
-# ── Bash starship init (for vibe sessions that use bash) ─────
-STARSHIP_INIT='eval "$(/var/figure/bin/starship init bash)"'
-if [ -f /.dockerenv ] && [ -f ~/.bashrc ] && ! grep -q 'starship init bash' ~/.bashrc; then
-  echo "$STARSHIP_INIT" >> ~/.bashrc
-fi
-
-# ── sh starship init (for minimal containers using /bin/sh) ──
-STARSHIP_INIT_SH='eval "$(/var/figure/bin/starship init sh)"'
-if [ -f /.dockerenv ] && ! grep -q 'starship init sh' ~/.profile 2>/dev/null; then
-  echo "$STARSHIP_INIT_SH" >> ~/.profile
-fi
 
 # Linux only aliases
 [ "$OS" = "Linux" ] && ln -sf "$DOTFILES/linux_aliases" ~/.linux_aliases
@@ -116,25 +89,6 @@ fi
 
 # ── Linux ─────────────────────────────────────────────────────
 if [ "$OS" = "Linux" ]; then
-  # If /var/figure exists, move dotfiles there and symlink
-  if [ -d /var/figure ] && [ ! -d /var/figure/dotfiles ]; then
-    mv "$DOTFILES" /var/figure/dotfiles
-    ln -sf /var/figure/dotfiles "$HOME/dotfiles"
-    DOTFILES=/var/figure/dotfiles
-  fi
-
-  # Re-create symlinks with the (possibly updated) DOTFILES path
-  ln -sf "$DOTFILES/zshrc"          ~/.zshrc
-  ln -sf "$DOTFILES/zsh_aliases"    ~/.zsh_aliases
-  ln -sf "$DOTFILES/shared_aliases" ~/.shared_aliases
-  ln -sf "$DOTFILES/tmux.conf"      ~/.tmux.conf
-  ln -sf "$DOTFILES/vimrc"          ~/.vimrc
-  ln -sf "$DOTFILES/starship.toml"  ~/.config/starship.toml
-  ln -sf "$DOTFILES/bat/config"     ~/.config/bat/config
-  mkdir -p ~/.claude
-  ln -sf "$DOTFILES/.claude/statusline-command.sh"   ~/.claude/statusline-command.sh
-
-  # Skip apt in devcontainer — custom.profile.sh handles it
   if [ "$NO_SUDO" = false ] && [ ! -f /.dockerenv ]; then
     sudo apt-get update -q
     sudo apt-get install -y zsh tmux bat ripgrep fzf xclip
@@ -158,12 +112,6 @@ if [ "$OS" = "Linux" ]; then
       | tar xz --strip-components=1 -C ~/.local/bin --wildcards '*/delta'
   fi
 
-  # neovim (need >= 0.9 for lazy.nvim + modern Lua API)
-  if ! command -v nvim &>/dev/null || [ "$(nvim --version | head -1 | grep -oP '\d+\.\d+' | head -1 | tr -d '.')" -lt 09 ] 2>/dev/null; then
-    curl -sSfL https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz \
-      | tar xz --strip-components=1 -C ~/.local
-  fi
-
   # eza
   if ! command -v eza &>/dev/null; then
     curl -sS --location \
@@ -171,65 +119,23 @@ if [ "$OS" = "Linux" ]; then
       | tar xz -C ~/.local/bin
   fi
 
-  # ── Claude persistent data ──────────────────────────────────
-  if [ -d /var/figure ]; then
-    # Home-level ~/.claude (sessions, credentials, history)
-    mkdir -p /var/figure/.claude
-    if [ -d "$HOME/.claude" ] && [ ! -L "$HOME/.claude" ]; then
-      # Merge existing contents then replace with symlink
-      cp -a "$HOME/.claude/." /var/figure/.claude/ 2>/dev/null || true
-      # Skip if it's a mount point (can't remove)
-      if rm -rf "$HOME/.claude" 2>/dev/null; then
-        ln -sfn /var/figure/.claude "$HOME/.claude"
-      else
-        echo "==> Warning: ~/.claude is a mount point, skipping symlink"
-      fi
-    elif [ ! -e "$HOME/.claude" ]; then
-      ln -sfn /var/figure/.claude "$HOME/.claude"
-    fi
-
-    # Project-level .claude config — symlink all files from dotfiles/.claude/
-    # into the project .claude/ dir (skills/ stays git-tracked, everything else from dotfiles)
-    for PROJECT_CLAUDE in "$HOME/src/project-x/.claude" "/workspaces/project-x/.claude"; do
-      if [ -d "$PROJECT_CLAUDE" ]; then
-        for f in "$DOTFILES/.claude/"*; do
-          name="$(basename "$f")"
-          [ "$name" = "skills" ] && continue  # skills is git-tracked in project-x
-          ln -sf "$f" "$PROJECT_CLAUDE/$name"
-        done
-      fi
-    done
-
-    # Persistent memory — Claude uses different project keys on host vs devcontainer
-    # Both should point to the same persistent storage
-    PERSISTENT_MEMORY="/var/figure/project-x/.claude/projects/-workspaces-project-x/memory"
-    mkdir -p "$PERSISTENT_MEMORY"
-    for PROJECT_KEY in "-workspaces-project-x" "-home-${USER}-src-project-x"; do
-      PROJECT_MEMORY="$HOME/.claude/projects/${PROJECT_KEY}/memory"
-      mkdir -p "$(dirname "$PROJECT_MEMORY")"
-      if [ -d "$PROJECT_MEMORY" ] && [ ! -L "$PROJECT_MEMORY" ]; then
-        cp -a "$PROJECT_MEMORY/." "$PERSISTENT_MEMORY/" 2>/dev/null || true
-        rm -rf "$PROJECT_MEMORY"
-      fi
-      ln -sfn "$PERSISTENT_MEMORY" "$PROJECT_MEMORY"
-    done
-  fi
-
-  # ── Devcontainer profiles ────────────────────────────────────
-  if [ -d /var/figure ]; then
-    cp "$DOTFILES/personal_profile.sh" /var/figure/.personal_profile.sh
-
-    # Symlink custom.profile.sh to project-x devcontainer (gitignored, personal)
-    local_devcontainer="$HOME/src/project-x/.devcontainer"
-    if [ -d "$local_devcontainer" ]; then
-      cp "$DOTFILES/custom.profile.sh" "$local_devcontainer/custom.profile.sh"
-    fi
+  # neovim (need >= 0.11 for modern LSP API)
+  if ! command -v nvim &>/dev/null || [ "$(nvim --version | head -1 | grep -oP '\d+\.\d+' | head -1 | tr -d '.')" -lt 011 ] 2>/dev/null; then
+    curl -sSfL https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz \
+      | tar xz --strip-components=1 -C ~/.local
   fi
 fi
 
 # ── Set zsh as default ────────────────────────────────────────
 if [ "$SKIP_CHSH" = false ] && [ "$SHELL" != "$(which zsh)" ] && command -v zsh &>/dev/null; then
   chsh -s "$(which zsh)"
+fi
+
+# ── Private overlay ───────────────────────────────────────────
+export DOTFILES_PUBLIC_INSTALLED=1
+if [ -f "$HOME/.dotfiles-private/install.sh" ]; then
+  echo "==> Running private overlay..."
+  source "$HOME/.dotfiles-private/install.sh"
 fi
 
 echo "==> Done. Restart your shell."

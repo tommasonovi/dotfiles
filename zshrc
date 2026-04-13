@@ -6,16 +6,6 @@ export VISUAL=nvim
 # ── PATH ──────────────────────────────────────────────────────
 export PATH="$HOME/.local/bin:$PATH"
 command -v brew &>/dev/null && export PATH="/opt/homebrew/bin:$PATH"
-[ -d /var/figure/bin ] && export PATH="/var/figure/bin:$PATH"
-
-# ── Devcontainer profile ──────────────────────────────────────
-# Source project profile directly for aliases/env (not load-profile.sh
-# which re-runs custom.profile.sh apt installs on every shell).
-# ── Bazel completion (must be before compinit) ────────────────
-if command -v bazel &>/dev/null; then
-  [ -f ~/.zsh/_bazel ] || { mkdir -p ~/.zsh && curl -sfo ~/.zsh/_bazel \
-    https://raw.githubusercontent.com/bazelbuild/bazel/master/scripts/zsh_completion/_bazel; }
-fi
 
 # ── Completion ────────────────────────────────────────────────
 [ -f ~/.zsh/git-completion.bash ] && \
@@ -23,14 +13,6 @@ fi
 fpath=(~/.zsh $fpath)
 autoload -Uz compinit && compinit
 autoload -Uz bashcompinit && bashcompinit
-
-# ── Devcontainer profile ──────────────────────────────────────
-# Source after compinit/bashcompinit so bash completions register
-_px_root="${PROJECT_X_ROOT:-/workspaces/project-x}"
-if [ -f "$_px_root/.devcontainer/profile.sh" ]; then
-  source "$_px_root/.devcontainer/profile.sh"
-fi
-unset _px_root
 
 # ── History ───────────────────────────────────────────────────
 HISTFILE=~/.zsh_history
@@ -73,17 +55,10 @@ command -v walk &>/dev/null && function lk { cd "$(walk --icons "$@")" }
 # ── Aliases ───────────────────────────────────────────────────
 [ -f ~/.shared_aliases ] && source ~/.shared_aliases
 [ -f ~/.zsh_aliases ]    && source ~/.zsh_aliases
-[ -f ~/.linux_aliases ] && source ~/.linux_aliases
+[ -f ~/.linux_aliases ]  && source ~/.linux_aliases
 
 # ── Secrets ───────────────────────────────────────────────────
-[ -f /var/figure/secrets.sh ] && source /var/figure/secrets.sh
-[ -f ~/.secrets ]             && source ~/.secrets
-
-# ── Git config ────────────────────────────────────────────────
-# Ensure dotfiles gitconfig is included (devcontainer may have its own ~/.gitconfig)
-if [ -f /var/figure/dotfiles/gitconfig ] && ! git config --global --get-all include.path 2>/dev/null | grep -q "/var/figure/dotfiles/gitconfig"; then
-  git config --global --add include.path /var/figure/dotfiles/gitconfig
-fi
+[ -f ~/.secrets ] && source ~/.secrets
 
 # ── Local aliases (machine-specific, not in repo) ─────────────
 [ -f ~/.local_aliases ] && source ~/.local_aliases
@@ -101,3 +76,6 @@ bindkey "^[[A" up-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
 bindkey "^[OA" up-line-or-beginning-search
 bindkey "^[OB" down-line-or-beginning-search
+
+# ── Private overlay (company/personal config) ────────────────
+[ -f ~/.zshrc.private ] && source ~/.zshrc.private

@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal terminal setup for macOS, Ubuntu, and devcontainers.
+Personal terminal setup for macOS and Ubuntu.
 
 ## Tools
 
@@ -23,7 +23,7 @@ dotfiles/
 ├── zshrc                 # single zshrc, works on all platforms
 ├── zsh_aliases           # zsh aliases
 ├── shared_aliases        # aliases that work in bash and zsh
-├── linux_aliases         # linux-specific aliases and functions
+├── linux_aliases         # linux-specific aliases
 ├── starship.toml         # prompt config
 ├── tmux.conf             # tmux config (Ctrl+A, vim-style)
 ├── gitconfig             # git config (aliases, delta)
@@ -33,34 +33,19 @@ dotfiles/
 │   ├── lua/config/       # options, keymaps, lazy.nvim bootstrap
 │   └── lua/plugins/      # plugin specs (lsp, cmp, copilot, fzf, noice, etc.)
 ├── bat/config            # bat config
-├── .claude/              # Claude Code settings and statusline
 ├── ghostty/config        # ghostty config (macOS only)
 ├── cursor/settings.json  # cursor editor settings (macOS only)
-├── cursor/keybindings.json
-├── personal_profile.sh   # devcontainer bootstrap (tracked)
-├── custom.profile.sh     # devcontainer custom profile (tracked)
-└── README.md
+└── cursor/keybindings.json
 ```
 
 ## Install
 
-### macOS or Ubuntu
 ```bash
 git clone https://github.com/tommasonovi/dotfiles.git ~/dotfiles
 ~/dotfiles/install.sh
 ```
 
 The installer handles everything: symlinks, tool installs, zsh plugins, git config, and setting zsh as default shell.
-
-### Devcontainer
-
-No manual setup needed. The devcontainer loads automatically via `custom.profile.sh` → `personal_profile.sh`:
-
-1. `install.sh` symlinks `custom.profile.sh` into `~/src/project-x/.devcontainer/` (gitignored)
-2. `install.sh` symlinks `personal_profile.sh` to `/var/figure/.personal_profile.sh`
-3. On container start, `personal_profile.sh` installs tools to `/var/figure/bin` (persists across rebuilds), runs `install.sh` for symlinks, and switches to zsh
-
-`/var/figure` is mounted from the host, so dotfiles and tools persist across container rebuilds.
 
 ### Flags
 
@@ -69,6 +54,10 @@ No manual setup needed. The devcontainer loads automatically via `custom.profile
 | `--no-ghostty` | Skip Ghostty install |
 | `--no-chsh` | Skip changing default shell |
 | `--no-sudo` | Skip apt installs |
+
+### Private overlay
+
+If you have a private dotfiles repo with company-specific or personal config, clone it to `~/.dotfiles-private`. The public `install.sh` will automatically source `~/.dotfiles-private/install.sh` at the end, and `zshrc` will source `~/.zshrc.private` if it exists.
 
 ## Git aliases
 
@@ -92,9 +81,8 @@ No manual setup needed. The devcontainer loads automatically via `custom.profile
 | `git uncommit` | reset --soft HEAD^ |
 | `git pushfl` | push --force-with-lease |
 | `git yeet` | push and set upstream |
-| `git cob <name>` | create `user/tommasonovi/<name>` branch |
 
-`git diff` outputs plain text (easy to copy-paste into Slack). `git delta` uses the delta pager for a pretty side-by-side view.
+`git diff` outputs plain text (easy to copy-paste). `git delta` uses the delta pager for a pretty side-by-side view.
 
 ## Neovim (primary editor)
 
@@ -147,6 +135,16 @@ First-time setup:
 
 Same keybinds as neovim. Uses vim-plug (auto-installs on first launch), asyncomplete, vim-lsp, copilot.vim, vim-vsnip.
 
+## Shell aliases
+
+| Alias | Action |
+|---|---|
+| `ff` | Fuzzy find a file and open in nvim |
+| `hist` | Fuzzy search shell history |
+| `ls` / `ll` / `la` | eza with icons |
+| `lk` | walk file browser |
+| `cd` | zoxide smart jump |
+
 ## tmux
 
 Prefix is **Ctrl+A**.
@@ -163,19 +161,9 @@ Prefix is **Ctrl+A**.
 | `Ctrl+A r` | Reload config |
 | `Ctrl+A d` | Detach |
 
-## Shell aliases
-
-| Alias | Action |
-|---|---|
-| `ff` | Fuzzy find a file and open in nvim |
-| `hist` | Fuzzy search shell history |
-| `ls` / `ll` / `la` | eza with icons |
-| `lk` | walk file browser |
-| `cd` | zoxide smart jump |
-
 ## Updating
 ```bash
-cd ~/dotfiles  # or /var/figure/dotfiles in devcontainer
+cd ~/dotfiles
 git pull
 ```
 
