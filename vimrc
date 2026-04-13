@@ -16,6 +16,9 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'rafamadriz/friendly-snippets'
 call plug#end()
 
 " ── General ──────────────────────────────────────────
@@ -204,10 +207,16 @@ let g:lsp_settings = {
 \   'clangd': {'cmd': ['clangd', '--background-index', '--clang-tidy']},
 \ }
 
-" asyncomplete: tab/shift-tab to navigate, enter to confirm
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <CR>    pumvisible() ? asyncomplete#close_popup() : "\<CR>"
+" asyncomplete + vsnip: snippet expand/jump > completion > tab
+imap <expr> <Tab>
+  \ vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' :
+  \ pumvisible()        ? "\<C-n>"                        : "\<Tab>"
+imap <expr> <S-Tab>
+  \ vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' :
+  \ pumvisible()       ? "\<C-p>"                   : "\<S-Tab>"
+smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : "\<Tab>"
+smap <expr> <S-Tab> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)'      : "\<S-Tab>"
+inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
 
 " ── Create undo directory if missing ───────────────
 if !isdirectory(expand(&undodir))
