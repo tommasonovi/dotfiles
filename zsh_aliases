@@ -6,7 +6,7 @@ fi
 alias python='python3'
 alias pip='pip3'
 alias ...='../..'
-alias ff='find . -type f | fzf'
+alias ff='vim "$(fzf)"'
 alias hist='history | fzf'
 
 # SSH
