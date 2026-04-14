@@ -3,6 +3,22 @@ local opt = vim.opt
 -- General
 opt.mouse = "a"
 opt.clipboard = "unnamedplus"
+
+-- Use OSC 52 clipboard in headless environments (devcontainer, SSH)
+-- where xclip/xsel are unavailable. Falls back to normal clipboard on macOS/desktop Linux.
+if not vim.env.DISPLAY and not vim.env.WAYLAND_DISPLAY and vim.fn.has("mac") == 0 then
+    vim.g.clipboard = {
+        name = "OSC 52",
+        copy = {
+            ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+            ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+        },
+        paste = {
+            ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+            ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+        },
+    }
+end
 opt.undofile = true
 opt.swapfile = false
 opt.backup = false
