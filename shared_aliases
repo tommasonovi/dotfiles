@@ -2,8 +2,6 @@ if command -v bat &>/dev/null; then
   alias cat='bat -p'
 elif command -v batcat &>/dev/null; then
   alias cat='batcat -p'
-elif [ -f /var/figure/bin/bat ]; then
-  alias cat='/var/figure/bin/bat -p'
 fi
 
 # eza (modern ls)

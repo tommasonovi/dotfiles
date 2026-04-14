@@ -133,9 +133,9 @@ fi
 
 # ── Private overlay ───────────────────────────────────────────
 export DOTFILES_PUBLIC_INSTALLED=1
-if [ -f "$HOME/.dotfiles-figure/install.sh" ]; then
+if [ -f "$HOME/.dotfiles-private/install.sh" ]; then
   echo "==> Running Figure overlay..."
-  source "$HOME/.dotfiles-figure/install.sh"
+  source "$HOME/.dotfiles-private/install.sh"
 fi
 
 echo "==> Done. Restart your shell."
