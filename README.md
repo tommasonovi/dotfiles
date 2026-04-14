@@ -57,7 +57,7 @@ The installer handles everything: symlinks, tool installs, zsh plugins, git conf
 
 ### Private overlay
 
-If you have a private dotfiles repo with company-specific or personal config, clone it to `~/.dotfiles-private`. The public `install.sh` will automatically source `~/.dotfiles-private/install.sh` at the end, and `zshrc` will source `~/.zshrc.private` if it exists.
+If you have a private dotfiles repo with company-specific or personal config, clone it to `~/.dotfiles-figure`. The public `install.sh` will automatically source `~/.dotfiles-figure/install.sh` at the end, and `zshrc` will source `~/.zshrc.private` if it exists.
 
 ## Git aliases
 
