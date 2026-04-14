@@ -37,7 +37,6 @@ command -v starship &>/dev/null && eval "$(starship init zsh)"
 [ -d ~/.fzf/bin ] && export PATH="$HOME/.fzf/bin:$PATH"
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --bind ctrl-v:paste"
 if [ -d ~/.fzf/shell ]; then
   source ~/.fzf/shell/key-bindings.zsh
   source ~/.fzf/shell/completion.zsh
