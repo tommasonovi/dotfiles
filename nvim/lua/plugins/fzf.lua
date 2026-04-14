@@ -2,13 +2,13 @@ return {
     { "junegunn/fzf" },
     {
         "junegunn/fzf.vim",
-        init = function()
-            -- ctrl-v pastes from system clipboard inside the fzf prompt
-            local existing = vim.env.FZF_DEFAULT_OPTS or ""
-            vim.env.FZF_DEFAULT_OPTS = existing .. " --bind ctrl-v:paste"
-        end,
+        dependencies = { "junegunn/fzf" },
         keys = {
             { "<leader>ff", "<cmd>Files<CR>",   desc = "Find files" },
+            { "<leader>fF", function()
+                local query = vim.fn.getreg('"')
+                vim.fn["fzf#vim#files"]("", { options = "--query=" .. query }, 0)
+            end, desc = "Find files (from yank)" },
             { "<leader>fg", "<cmd>Rg<CR>",      desc = "Grep" },
             { "<leader>fb", "<cmd>Buffers<CR>",  desc = "Buffers" },
             { "<leader>fh", "<cmd>History<CR>",  desc = "History" },
