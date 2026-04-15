@@ -77,6 +77,16 @@ bindkey -M viins "^U" kill-whole-line
 # Bracketed paste — prevents newlines in pasted text from submitting the command
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
+# Cursor shape: beam in insert, block in normal
+function zle-keymap-select zle-line-init {
+  if [[ $KEYMAP == vicmd ]]; then
+    echo -ne "\e[2 q"  # block
+  else
+    echo -ne "\e[6 q"  # beam
+  fi
+}
+zle -N zle-keymap-select
+zle -N zle-line-init
 
 # ── Home / End (Cmd+Arrow via Ghostty keybinds) ─────────────
 bindkey "^[[H" beginning-of-line
