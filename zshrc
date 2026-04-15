@@ -65,7 +65,7 @@ command -v walk &>/dev/null && function lk { cd "$(walk --icons "$@")" }
 
 # ── Vi mode ──────────────────────────────────────────────────
 bindkey -v
-export KEYTIMEOUT=1   # faster ESC recognition (10ms)
+export KEYTIMEOUT=5   # 50ms — fast ESC but safe for devcontainer/SSH escape sequences
 
 # ── Home / End (Cmd+Arrow via Ghostty keybinds) ─────────────
 bindkey "^[[H" beginning-of-line
