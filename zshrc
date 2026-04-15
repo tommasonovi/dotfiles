@@ -78,13 +78,16 @@ bindkey -M viins "^U" kill-whole-line
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
 # Cursor shape: beam in insert, block in normal
-function zle-keymap-select zle-line-init {
+# Also forward to starship so the ❯/❮ prompt symbol updates
+function zle-keymap-select {
   if [[ $KEYMAP == vicmd ]]; then
     echo -ne "\e[2 q"  # block
   else
     echo -ne "\e[6 q"  # beam
   fi
+  (( ${+functions[starship_zle-keymap-select]} )) && starship_zle-keymap-select
 }
+function zle-line-init { echo -ne "\e[6 q" }  # beam on each new prompt
 zle -N zle-keymap-select
 zle -N zle-line-init
 
