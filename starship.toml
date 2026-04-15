@@ -58,7 +58,7 @@ color_other = ''
 color_time = ''
 color_duration = ''
 
-color_vimcmd_ok = 'bright-yellow'
+color_vimcmd_ok = 'bright-red'
 color_vimcmd_replace = 'purple'
 color_vimcmd_visual = 'cyan'
 
