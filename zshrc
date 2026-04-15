@@ -66,6 +66,17 @@ command -v walk &>/dev/null && function lk { cd "$(walk --icons "$@")" }
 # ── Vi mode ──────────────────────────────────────────────────
 bindkey -v
 export KEYTIMEOUT=5   # 50ms — fast ESC but safe for devcontainer/SSH escape sequences
+# Restore keys that bindkey -v clobbers
+bindkey -M viins "^?" backward-delete-char   # backspace
+bindkey -M viins "^H" backward-delete-char   # ctrl+backspace
+bindkey -M viins "^W" backward-kill-word
+bindkey -M viins "^A" beginning-of-line
+bindkey -M viins "^E" end-of-line
+bindkey -M viins "^K" kill-line
+bindkey -M viins "^U" kill-whole-line
+# Bracketed paste — prevents newlines in pasted text from submitting the command
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
 
 # ── Home / End (Cmd+Arrow via Ghostty keybinds) ─────────────
 bindkey "^[[H" beginning-of-line
