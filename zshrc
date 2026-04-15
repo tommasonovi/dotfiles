@@ -63,9 +63,16 @@ command -v walk &>/dev/null && function lk { cd "$(walk --icons "$@")" }
 # ── Local aliases (machine-specific, not in repo) ─────────────
 [ -f ~/.local_aliases ] && source ~/.local_aliases
 
+# ── Vi mode ──────────────────────────────────────────────────
+bindkey -v
+export KEYTIMEOUT=1   # faster ESC recognition (10ms)
+
 # ── Home / End (Cmd+Arrow via Ghostty keybinds) ─────────────
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
+# Restore in vi insert mode too
+bindkey -M viins "^[[H" beginning-of-line
+bindkey -M viins "^[[F" end-of-line
 
 # ── History search (must be last) ────────────────────────────
 autoload -U up-line-or-beginning-search
