@@ -58,9 +58,9 @@ color_other = ''
 color_time = ''
 color_duration = ''
 
-color_vimcmd_ok = 'green'
+color_vimcmd_ok = 'bright-yellow'
 color_vimcmd_replace = 'purple'
-color_vimcmd_visual = 'yellow'
+color_vimcmd_visual = 'cyan'
 
 [palettes.gruvbox_dark]
 
