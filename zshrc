@@ -91,31 +91,6 @@ function zle-line-init { echo -ne "\e[6 q" }  # beam on each new prompt
 zle -N zle-keymap-select
 zle -N zle-line-init
 
-# ── Vim-like yank/paste & copy-mode entry ───────────────────
-# p / P in vi-normal paste from the system clipboard (works with/without tmux)
-vi-paste-clipboard() {
-  LBUFFER+="$(pbpaste 2>/dev/null || xclip -selection clipboard -o 2>/dev/null)"
-}
-zle -N vi-paste-clipboard
-bindkey -M vicmd 'p' vi-paste-clipboard
-bindkey -M vicmd 'P' vi-paste-clipboard
-# V opens the command line in $EDITOR (zsh's default `v`, moved since we reuse `v`)
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd 'V' edit-command-line
-# Inside tmux: v / / / ? from vi-normal jump straight into tmux copy-mode
-if [[ -n "$TMUX" ]]; then
-  vi-tmux-copy-mode()   { tmux copy-mode; tmux send-keys -X begin-selection }
-  vi-tmux-search-fwd()  { tmux copy-mode; tmux send-keys / }
-  vi-tmux-search-back() { tmux copy-mode; tmux send-keys ? }
-  zle -N vi-tmux-copy-mode
-  zle -N vi-tmux-search-fwd
-  zle -N vi-tmux-search-back
-  bindkey -M vicmd 'v' vi-tmux-copy-mode
-  bindkey -M vicmd '/' vi-tmux-search-fwd
-  bindkey -M vicmd '?' vi-tmux-search-back
-fi
-
 # ── Home / End (Cmd+Arrow via Ghostty keybinds) ─────────────
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
