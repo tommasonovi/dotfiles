@@ -1,19 +1,20 @@
 #!/bin/bash
 set -e
 
-__lava() { printf '\033[38;5;%sm%s\033[0m\n' "$1" "$2"; }
-echo
-__lava 226 '   _____ _  _ ___   __  __  ___  _   _ ___ ___   ___ ___   _      ___   ___'
-__lava 214 '  |_   _| || | __| |  \/  |/ _ \| | | / __| __| |_ _/ __| | |    /_\ \ / /_\'
-__lava 208 '    | | | __ | _|  | |\/| | (_) | |_| \__ \ _|   | |\__ \ | |__ / _ \ V / _ \'
-__lava 196 '    |_| |_||_|___| |_|  |_|\___/ \___/|___/___| |___|___/ |____/_/ \_\_/_/ \_\'
-__lava 202 '  ░▒▓██████████████████████████████████████████████████████████████████▓▒░'
-__lava 160 '      .    ▒    .    ▒    .    ▒    .    ▒    .    ▒    .    ▒    .'
-echo
-unset -f __lava
-
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 OS="$(uname -s)"
+
+# Best-effort pull to stay current. Gated to once/hour so it doesn't add a
+# network round-trip to every shell start in devcontainers. Silent on no-op or
+# offline; --ff-only avoids touching local work-in-progress.
+__pull_stamp="$HOME/.cache/dotfiles-pull-stamp"
+mkdir -p "$(dirname "$__pull_stamp")"
+if [ ! -f "$__pull_stamp" ] || [ -n "$(find "$__pull_stamp" -mmin +60 2>/dev/null)" ]; then
+  git -C "$DOTFILES" pull --ff-only --quiet 2>/dev/null || true
+  touch "$__pull_stamp"
+fi
+unset __pull_stamp
+
 SKIP_GHOSTTY=false
 SKIP_CHSH=false
 NO_SUDO=false
