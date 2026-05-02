@@ -15,6 +15,8 @@ if [ ! -f "$__pull_stamp" ] || [ -n "$(find "$__pull_stamp" -mmin +60 2>/dev/nul
 fi
 unset __pull_stamp
 
+[ -f "$DOTFILES/banner.sh" ] && source "$DOTFILES/banner.sh"
+
 SKIP_GHOSTTY=false
 SKIP_CHSH=false
 NO_SUDO=false
