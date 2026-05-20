@@ -37,3 +37,11 @@ map("v", ">", ">gv")
 
 -- Netrw file explorer
 map("n", "<leader>e", "<cmd>Lexplore<CR>")
+
+-- Toggle gutter (line numbers + signcolumn) for clean copy-paste via terminal
+map("n", "<leader>cp", function()
+  local on = vim.wo.number
+  vim.wo.number = not on
+  vim.wo.relativenumber = not on
+  vim.wo.signcolumn = on and "no" or "yes"
+end, { desc = "toggle gutter for copy" })
