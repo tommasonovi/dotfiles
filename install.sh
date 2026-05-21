@@ -104,8 +104,16 @@ fi
 # ── Linux ─────────────────────────────────────────────────────
 if [ "$OS" = "Linux" ]; then
   if [ "$NO_SUDO" = false ] && [ ! -f /.dockerenv ]; then
-    sudo apt-get update -q
-    sudo apt-get install -y zsh tmux bat ripgrep fzf xclip
+    # Skip apt entirely if every package is already installed — repeat
+    # installs don't need to fight the dpkg lock with unattended-upgrades.
+    needs_install=false
+    for pkg in zsh tmux bat ripgrep fzf xclip; do
+      dpkg -s "$pkg" >/dev/null 2>&1 || { needs_install=true; break; }
+    done
+    if [ "$needs_install" = true ]; then
+      sudo apt-get update -q
+      sudo apt-get install -y zsh tmux bat ripgrep fzf xclip
+    fi
   fi
 
   command -v starship &>/dev/null || \
