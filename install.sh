@@ -103,7 +103,7 @@ fi
 
 # ── Linux ─────────────────────────────────────────────────────
 if [ "$OS" = "Linux" ]; then
-  if [ "$NO_SUDO" = false ] && [ ! -f /.dockerenv ]; then
+  if [ "$NO_SUDO" = false ]; then
     # Skip apt entirely if every package is already installed — repeat
     # installs don't need to fight the dpkg lock with unattended-upgrades.
     needs_install=false
