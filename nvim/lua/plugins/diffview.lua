@@ -10,11 +10,18 @@ return {
         { "<leader>dq", "<cmd>DiffviewClose<CR>",        desc = "Diffview: close" },
     },
     config = function()
+        local actions = require("diffview.actions")
         require("diffview").setup({
             view = {
                 merge_tool = {
                     layout = "diff3_mixed",
                     disable_diagnostics = true,
+                },
+            },
+            keymaps = {
+                file_panel = {
+                    { "n", "u", actions.toggle_stage_entry, { desc = "Stage/unstage file (toggle)" } },
+                    { "n", "r", actions.restore_entry,      { desc = "Restore file (discard changes)" } },
                 },
             },
         })
