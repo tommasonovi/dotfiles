@@ -5,6 +5,16 @@ return {
     keys = {
         { "<leader>dv", "<cmd>DiffviewOpen<CR>",         desc = "Diffview: open" },
         { "<leader>dV", "<cmd>DiffviewOpen main<CR>",    desc = "Diffview: vs main" },
+        {
+            "<leader>dr",
+            function()
+                local rev = vim.fn.input("Diffview range (e.g. HEAD~2..HEAD): ")
+                if rev ~= "" then
+                    vim.cmd("DiffviewOpen " .. rev)
+                end
+            end,
+            desc = "Diffview: open revision range",
+        },
         { "<leader>dh", "<cmd>DiffviewFileHistory<CR>",  desc = "Diffview: branch history" },
         { "<leader>df", "<cmd>DiffviewFileHistory %<CR>", desc = "Diffview: current file history" },
         { "<leader>dq", "<cmd>DiffviewClose<CR>",        desc = "Diffview: close" },
